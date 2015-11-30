@@ -10,7 +10,8 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-
+#include <map>
+#include <string>
 //------------------------------------------------------ Include personnel
 #include <Cible.h>
 //------------------------------------------------------------- Constantes
@@ -42,6 +43,7 @@ Cible::Cible(const Cible & unCible)
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <Cible>" << endl;
 #endif
+	lesLogs = new map<string, list<Log>>[NB_HEURES];
 } //----- Fin de Cible (constructeur de copie)
 
 
