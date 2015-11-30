@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Cible.h" />
-    <ClInclude Include="..\Collection.h" />
-    <ClInclude Include="..\Graphe.h" />
-    <ClInclude Include="..\Log.h" />
+    <ClCompile Include="Cible.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cible.h" />
+    <ClInclude Include="Collection.h" />
+    <ClInclude Include="Graphe.h" />
+    <ClInclude Include="Log.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AD69913-EAC6-48A7-9458-C8BD27D86E02}</ProjectGuid>
