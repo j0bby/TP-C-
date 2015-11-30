@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cible.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cible.h" />
     <ClInclude Include="Collection.h" />
     <ClInclude Include="Graphe.h" />
+    <ClInclude Include="Header.h" />
     <ClInclude Include="Log.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -80,6 +82,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\FALLOUH\Documents\GitHubVisualStudio\TP-C-\TP3\TP3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
