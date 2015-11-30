@@ -36,7 +36,7 @@ class Cible
 
 public:
 //----------------------------------------------------- Méthodes publiques
-	int Ajouter(const string &requete, string log);
+	int Ajouter(string & log);
 	// Mode d'emploi :
 	// Crée un Log à partir de la string entrée en paramètre.
 	// Ajoute ce Log au bon emplacement (bonne heure, bonne requête).

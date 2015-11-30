@@ -26,7 +26,6 @@
     <ClInclude Include="Cible.h" />
     <ClInclude Include="Collection.h" />
     <ClInclude Include="Graphe.h" />
-    <ClInclude Include="Header.h" />
     <ClInclude Include="Log.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
