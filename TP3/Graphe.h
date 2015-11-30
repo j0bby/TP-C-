@@ -1,0 +1,109 @@
+/*************************************************************************
+Graphe  -  description
+-------------------
+début                : 2015
+copyright            : (C) 2015 par mfallouh_mvirsolvy
+*************************************************************************/
+
+//---------- Interface de la classe <Graphe> (fichier Graphe.h) ------
+#if ! defined ( GRAPHE_H )
+#define GRAPHE_H
+
+//--------------------------------------------------- Interfaces utilisées
+#include <string>
+#include <map>
+#include <Collection.h>
+using namespace std;
+//------------------------------------------------------------- Constantes 
+
+//------------------------------------------------------------------ Types 
+typedef struct paire {
+	int NumReferer;
+	int NumCible;
+	int NbHits;
+
+};
+//------------------------------------------------------------------------ 
+// Rôle de la classe <Graphe>
+// Cette classe représente un graphe. Elle contient les informations 
+// nécessaires à sa génération (nœuds et liens). On construit un Graphe 
+// à partir d’une Collection et des options souhaitées.
+//
+//------------------------------------------------------------------------ 
+class Graphe
+{
+	//----------------------------------------------------------------- PUBLIC
+
+public:
+	//----------------------------------------------------- Méthodes publiques
+
+	void GenereFichier(const string & nomFichier);
+	// Mode d'emploi :
+	// écrit dans(ou crée) le fichier de nom « nomFichier » les instructions
+	// de création de graphe, au format spécifié dans l’énoncé.
+	// Si le graphe est vide, crée un fichier vide.
+	//
+	// Contrat :
+	//
+
+
+	//------------------------------------------------- Surcharge d'opérateurs
+	Graphe & operator = (const Graphe & unGraphe);
+	// Mode d'emploi :
+	//
+	// Contrat :
+	//
+
+
+	//-------------------------------------------- Constructeurs - destructeur
+	Graphe(const Graphe & unGraphe);
+	// Mode d'emploi (constructeur de copie) :
+	//
+	// Contrat :
+	//
+
+	Graphe(const Collection &aCol, const bool e = false, const int h = -1);
+	// Mode d'emploi :
+	// parcourt la Collection entrée en paramètre afin de remplir les dictionnaires.
+	// Prend compte des options e et h.
+	// Contrat :
+	//
+
+	virtual ~Graphe();
+	// Mode d'emploi :
+	//
+	// Contrat :
+	//
+
+	//------------------------------------------------------------------ PRIVE 
+
+protected:
+	//----------------------------------------------------- Méthodes protégées
+
+private:
+	//------------------------------------------------------- Méthodes privées
+
+protected:
+	//----------------------------------------------------- Attributs protégés
+
+	map<string, int > noeuds;	// dictionnaire de nœuds associant à chaque 
+							    // adresse de page son numero pour le tracé du graphe.
+							    // Le numéro est affecté par ordre de consultation des pages
+
+	map<paire, int> liens;		//dictionnaire de liens, associant à chaque paire(structure :
+								//referer et cible, identifiés par leurs numéros) son nombre de hits.
+
+private:
+	//------------------------------------------------------- Attributs privés
+
+	//---------------------------------------------------------- Classes amies
+
+	//-------------------------------------------------------- Classes privées
+
+	//----------------------------------------------------------- Types privés
+
+};
+
+//----------------------------------------- Types dépendants de <Graphe>
+
+#endif // GRAPHE_H

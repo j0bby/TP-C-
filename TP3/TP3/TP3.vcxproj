@@ -18,6 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Collection.h" />
+    <ClInclude Include="..\Graphe.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7AD69913-EAC6-48A7-9458-C8BD27D86E02}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -145,10 +149,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\marc_insa\3IF\TP3\Sources\Collection.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\marc_insa\3IF\TP3\Sources\Graphe.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

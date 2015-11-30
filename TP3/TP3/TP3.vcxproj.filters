@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\marc_insa\3IF\TP3\Sources\Collection.h">
+    <ClInclude Include="..\Collection.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Desktop\marc_insa\3IF\TP3\Sources\Graphe.h">
+    <ClInclude Include="..\Graphe.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
