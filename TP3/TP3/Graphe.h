@@ -12,7 +12,7 @@ copyright            : (C) 2015 par mfallouh_mvirsolvy
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <map>
-#include <Collection.h>
+#include "Collection.h"
 using namespace std;
 //------------------------------------------------------------- Constantes 
 
