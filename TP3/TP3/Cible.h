@@ -45,7 +45,7 @@ public:
 	// Contrat :
 	//
 
-	int Compte(const string &requete, const bool e =false , const int h =-1);
+	int Compte(const string &requete, const int h =-1);
 	// Mode d'emploi :
 	// Compte le nombre de logs consignés correspondant à la requête entrée en paramètre.
 	// Tient compte des options e et h pour filtrer les résultats.

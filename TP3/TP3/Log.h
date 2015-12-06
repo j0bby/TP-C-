@@ -32,7 +32,6 @@ class Log
 public:
 //----------------------------------------------------- Méthodes publiques
 
-
 //------------------------------------------------- Surcharge d'opérateurs
     Log & operator = ( const Log & unLog ); // déclaré mais non défini pour empécher son utilisation
     // Mode d'emploi :

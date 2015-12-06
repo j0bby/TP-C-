@@ -28,8 +28,11 @@ const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', S
 
 
 int Cible::Ajouter(string & log)
+// Algorithme :
+//
 {
-	Log *nouveauLog = new Log(log);
+	
+	Log nouveauLog = Log(log);				//			!!!VERIFIER SI CA MARCHE AVEC ALLOCATION STATIQUE !!!
 	string requete;		// nom de la requête (GET, POST..)
 	string date;		// informations de date
 	int heureLocale;	//heure locale
@@ -68,17 +71,48 @@ int Cible::Ajouter(string & log)
 
 	pair<map<string, list<Log>>::iterator, bool> insertion;
 	list<Log> listeLogs;
-	listeLogs.push_back(*nouveauLog);
-	insertion = lesLogs[heureGreenwich].insert(); // créér une paire pour l'insertion
+	listeLogs.push_back(nouveauLog);
+	pair<string, list<Log>> aInserer = { requete, listeLogs };	// créér une paire pour l'insertion
+	insertion = lesLogs[heureGreenwich].insert(aInserer);	//tentative d'insertion, on récupère le résultat
+	if (!insertion.second)	//si la liste existait déjà dans la map
+	{
+		lesLogs[heureGreenwich].find(requete)->second.push_back(nouveauLog);	//on ajoute le nouveau log à la liste
+		return 0;
+	}
 
 
-	return 0;
-}
+	return 1;
+}	//fin de Ajouter
 
-int Cible::Compte(const string & requete, const bool e, const int h)
+int Cible::Compte(const string & requete,  const int h)
+// Algorithme :
+//
 {
-	return 0;
-}
+	int compte = 0;	//variable de retour
+	map<string, list<Log>>::iterator it;	//itérateur pour le parcours de la map
+	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
+
+	if (h == -1)	//pas d'option h
+	{
+		for (int heure = 0; heure < 24; heure++)
+		{
+			it = lesLogs[heure].find(requete);
+			if (it != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
+			{
+					compte += it->second.size();
+			}
+		}
+	}
+	else	//option h spécifiée
+	{
+		it = lesLogs[h].find(requete);
+		if (it != lesLogs[h].end())	//si la requete est présente dans le dictionnaire
+		{
+			compte += it->second.size();
+		}
+	}
+	return compte;
+}	//fin de Compte
 
 /*//------------------------------------------------- Surcharge d'opérateurs
 Cible & Cible::operator = ( const Cible & unCible )
