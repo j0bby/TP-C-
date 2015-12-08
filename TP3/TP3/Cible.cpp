@@ -43,7 +43,7 @@ int Cible::Ajouter(const string & log)
 	size_t fin = log.find(SEP, debut);
 	if (debut != fin)
 	{
-		requete = log.substr(debut, fin);
+		requete = log.substr(debut, fin - debut);
 	}
 	else
 	{
@@ -53,7 +53,7 @@ int Cible::Ajouter(const string & log)
 	fin = log.find(SEP_DATE_FIN);
 	if (debut != fin)
 	{
-		date = log.substr(debut, fin);
+		date = log.substr(debut, fin - debut);
 	}
 	else
 	{
@@ -61,13 +61,13 @@ int Cible::Ajouter(const string & log)
 	}
 	debut = date.find(SEP_HEURE);
 	fin = date.find(SEP_HEURE, debut);
-	heureLocale = stoi(date.substr(debut, fin));
+	heureLocale = stoi(date.substr(debut, fin - debut));
 
 	debut = date.find(SEP, fin);
 	string::iterator itFin = date.end();
 	fin = distance(date.begin(), itFin);
 
-	decalage = stoi(date.substr(debut, fin));
+	decalage = stoi(date.substr(debut, fin - debut));
 	heureGreenwich = heureLocale - decalage;
 
 	pair<map<string, list<Log>>::iterator, bool> insertion;

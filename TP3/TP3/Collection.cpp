@@ -13,12 +13,13 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 #include <fstream>
 #include <iostream>
 #include <list>
+using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
 #include "Cible.h"
 //------------------------------------------------------------- Constantes
 const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';
-const string excluSiE[] = {(string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css"}
+const string excluSiE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css" };
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -98,7 +99,7 @@ Collection::Collection(const string & nomFichier)
 			size_t debut = ligneLog.find(SEP_REQ);
 			debut = ligneLog.find(SEP, debut);
 			size_t fin = ligneLog.find(SEP_REQ, debut);
-			string adrCible = ligneLog.substr(debut, fin);
+			string adrCible = ligneLog.substr(debut, fin - debut);
 
 			/* mise à jour du dictionnaire de Cible */
 			pair<map<string, Cible>::iterator, bool> insertion;		//pour recevoir le résultat de la tentative d'insertion
