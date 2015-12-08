@@ -27,7 +27,7 @@ const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', S
 //----------------------------------------------------- Méthodes publiques
 
 
-int Cible::Ajouter(string & log)
+int Cible::Ajouter(const string & log)
 // Algorithme :
 //
 {
@@ -60,7 +60,7 @@ int Cible::Ajouter(string & log)
 	}
 	debut = date.find(SEP_HEURE);
 	fin = date.find(SEP_HEURE, debut);
-	heureLocale = stoi(date.substr(debut, fin).c_str);
+	heureLocale = stoi(date.substr(debut, fin));
 
 	debut = date.find(SEP, fin);
 	string::iterator itFin = date.end();

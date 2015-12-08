@@ -48,7 +48,7 @@ public:
     // Contrat :
     //
 
-    Log ( string &log );
+    Log (const string &log );
     // Mode d'emploi :
     // découpe la string correspondant à un log et initialise les attributs.
     // Vérifie si la string est du bon format, si non, renvoie un message d'erreur (sortie erreur).
