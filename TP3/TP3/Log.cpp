@@ -56,7 +56,7 @@ Log::Log(const string &log)
 //
 {
 #ifdef MAP
-	//cout << "Appel au constructeur de <Log>" << endl;
+	cout << "Appel au constructeur de <Log>" << endl;
 #endif
 	if (log.empty()) // chaine vide
 	{
@@ -67,13 +67,16 @@ Log::Log(const string &log)
 	{
 		size_t posDebut, posFin;
 
-		posDebut = 0; // le début est toujours au début de la chaine.
+		posDebut = 0; 
+		posFin = 0;
 
-					  // récupération de l'IP
-		if ((posFin = log.find(SEP)) != string::npos)		// SEP trouvé
+		// récupération de l'IP
+		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
 			IP = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée
+			posDebut = posFin +1; 
+			cout << posDebut << " " << log[posDebut] << endl;
+			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -82,10 +85,12 @@ Log::Log(const string &log)
 		}
 
 		// récupération user
-		if ((posFin = log.find(SEP)) != string::npos)		// SEP trouvé
+		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
-			user = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée
+			user = log.substr(posDebut,posFin-posDebut);
+			posDebut = posFin + 1; 
+			cout << posDebut << " " << log[posDebut] << endl;
+			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -94,10 +99,12 @@ Log::Log(const string &log)
 		}
 
 		// récupération logname
-		if ((posFin = log.find(SEP)) != string::npos)		// SEP trouvé
+		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
-			logname = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée
+			logname = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 2; 
+			cout << posDebut << " " << log[posDebut] << endl;
+			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -106,10 +113,10 @@ Log::Log(const string &log)
 		}
 
 		//récupération date
-		if ((posFin = log.find(SEP_DATE)) != string::npos)// SEP_DATE trouvé
+		if ((posFin = log.find(SEP_DATE,posDebut)) != log.npos)// SEP_DATE trouvé
 		{
-			date = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 2); 	//on supprime la partie traitée
+			date = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 3; 	
 												//on suprime bien SEP_DATE et SEP qui le suit
 		}
 		else										// SEP-DATE non trouvé
@@ -118,22 +125,11 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// on enleve la partie requete
-		if ((posFin = log.find(SEP_REQ)) != string::npos)	// SEP_REQ trouvé
-		{
-			log.erase(posDebut, posFin + 2); //on supprime la partie concernant la requete
-		}
-		else										// SEP_REQ non trouvé
-		{
-			cerr << "[LOG] erreur dans <requête> : " << log << endl;
-			return;
-		}
-
 		// récupération statut
-		if ((posFin = log.find(SEP)) != string::npos)		// SEP trouvé
+		if ((posFin = log.find(SEP, posDebut)) != log.npos)		// SEP trouvé
 		{
-			statut = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée
+			statut = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 1;
 		}
 		else										// SEP non trouvé
 		{
@@ -141,11 +137,33 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération taille
-		if ((posFin = log.find(SEP)) != string::npos)		// SEP trouvé
+
+		// on enleve la partie requete
+		if ((posFin = log.find(SEP_REQ,posDebut)) != log.npos)	// SEP_REQ trouvé
 		{
-			taille = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée et le séparateur
+			posDebut = posFin + 2; //on supprime la partie concernant la requete
+		}
+		else										// SEP_REQ non trouvé
+		{
+			cerr << "[LOG] erreur dans <requête> : " << log << endl;
+			return;
+		}
+
+		// on enleve la partie retour retour 
+		if ((posFin = log.find(SEP, posDebut)) != log.npos)	// SEP_REQ trouvé
+		{
+			posDebut = posFin + 1; 
+		}
+		else										// SEP_REQ non trouvé
+		{
+			cerr << "[LOG] erreur dans <requête> : " << log << endl;
+			return;
+		}
+		// récupération taille
+		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
+		{
+			taille = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 2;  
 		}
 		else										// SEP non trouvé
 		{
@@ -154,38 +172,48 @@ Log::Log(const string &log)
 		}
 
 		// récupération referer
-		if ((posFin = log.find(SEP_REQ)) != string::npos)	//SEP_REQ trouvé
+		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
 		{
-			referer = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 2); //on supprime la partie traitée
+			referer = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 3; 
 		}
 		else										// SEP_REQ non trouvé
 		{
-			cerr << "[LOG] erreur dans <ip> : " << log << endl;
+			cerr << "[LOG] erreur dans <referer> : " << log << endl;
 			return;
 		}
 
 		// récupération navigateur
-		if ((posFin = log.find(SEP_REQ)) != string::npos)	// SEP trouvé
+		if ((posFin = log.find(SEP_REQ,posDebut)) != log.npos)	// SEP trouvé
 		{
-			navigateur = log.substr(posDebut, posFin);
-			log.erase(posDebut, posFin + 1); //on supprime la partie traitée
+			navigateur = log.substr(posDebut, posFin - posDebut);
+			posDebut = posFin + 1; 
 		}
 		else										// SEP non trouvé
 		{
-			cerr << "[LOG] erreur dans <ip> : " << log << endl;
+			cerr << "[LOG] erreur dans <navigateur> : " << log << endl;
 			return;
 		}
 
 		// tous les attributs sont initialisés
 
-		if (!log.empty())	// la chaine n'est pas vide
+		if (posDebut!=log.npos)	// la chaine n'est pas vide
 		{
 			cerr << "[LOG] erreur de remplissage, il reste: ";
-			cerr << log << endl;
+			cerr << log.substr(posDebut,log.npos) << endl;
 		}
 	} // fin du traitement sans erreur
-
+//#ifdef MAP
+	cout << "Les valeurs du Log sont :" << endl;
+	  cout << "IP"<<IP << endl;
+	  cout <<"logname"<< logname << endl;
+	  cout <<"user"<< user << endl;
+	  cout << "date"<<date << endl;
+	  cout << "statut"<<statut << endl;
+	  cout << "taille"<<taille << endl;
+	  cout << "referer"<<referer << endl;
+	  cout <<"nvigateur"<< navigateur << endl;
+//#endif
 } //----- Fin de Log
 
 
