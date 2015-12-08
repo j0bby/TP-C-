@@ -15,7 +15,8 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //------------------------------------------------------ Include personnel
 #include "Cible.h"
 //------------------------------------------------------------- Constantes
-const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';	// a mettre en extern
+const int NB_HEURES = 24;
+const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés

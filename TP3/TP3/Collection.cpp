@@ -10,11 +10,15 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-
+#include <fstream>
+#include <iostream>
+#include <list>
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
+#include "Cible.h"
 //------------------------------------------------------------- Constantes
-
+const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';
+const string excluSiE[] = {(string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css"}
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -25,12 +29,34 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 
 //----------------------------------------------------- Méthodes publiques
 
-
 void Collection::Top10(const bool e, const int h)
 // Algorithme
 //
 {
+	list<string> leTop;
 
+	if (e)	//option e spécifiée
+	{
+		if (h == -1)	//option h spécifiée
+		{
+
+		}
+		else	//option h non spécifiée
+		{
+
+		}
+	}
+	else	//option e non-spécifiée
+	{
+		if (h == -1)	//option h spécifiée
+		{
+
+		}
+		else	//option h non spécifiée
+		{
+
+		}
+	}
 }//----- Fin de Top10
 
 
@@ -52,6 +78,8 @@ Collection::Collection(const Collection & unCollection)
 #endif
 } //----- Fin de Collection (constructeur de copie)
 
+
+
 Collection::Collection(const string & nomFichier)
 // Algorithme :
 //
@@ -59,6 +87,37 @@ Collection::Collection(const string & nomFichier)
 #ifdef MAP
 	cout << "Appel au constructeur de <Collection>" << endl;
 #endif
+	ifstream fichier (nomFichier.c_str());
+	if (fichier)	//fichier trouvé
+	{
+		string ligneLog;
+		while (fichier)		//tant que l'on a pas fini de lire le fichier
+		{
+			/* extraction de la cible de la requête */
+			getline(fichier, ligneLog);
+			size_t debut = ligneLog.find(SEP_REQ);
+			debut = ligneLog.find(SEP, debut);
+			size_t fin = ligneLog.find(SEP_REQ, debut);
+			string adrCible = ligneLog.substr(debut, fin);
+
+			/* mise à jour du dictionnaire de Cible */
+			pair<map<string, Cible>::iterator, bool> insertion;		//pour recevoir le résultat de la tentative d'insertion
+			Cible cibleInser;
+			cibleInser.Ajouter(ligneLog);
+			pair<string, Cible> aInserer = { adrCible, cibleInser };	// créér une paire pour l'insertion
+			insertion = pages.insert(aInserer);	//tentative d'insertion, on récupère le résultat
+			if (!insertion.second)	//si la Cible existait déjà dans la map
+			{
+				pages.find(adrCible)->second.Ajouter(ligneLog);	//on ajoute le nouveau log à la Cible
+			}
+		}	//fin du fichier atteinte
+	}
+	else	//fichier non trouvé
+	{
+		cerr << "Fichier " << nomFichier << " non trouve !" << endl;
+	}
+
+
 } //----- Fin de Collection
 
 Collection::~Collection()

@@ -18,7 +18,8 @@ using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
-const int NB_HEURES = 24;
+extern const int NB_HEURES;
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE;	// a mettre en extern
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
