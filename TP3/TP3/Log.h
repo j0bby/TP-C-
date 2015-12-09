@@ -50,7 +50,7 @@ public:
 
     Log (const string &log );
     // Mode d'emploi :
-    // découpe la string correspondant à un log et initialise les attributs.
+    // Initialise tous les attributs à partir de la string en parametre.
     // Vérifie si la string est du bon format, si non, renvoie un message d'erreur (sortie erreur).
 	//
     // Contrat :
@@ -70,7 +70,7 @@ protected:
 private:
 //------------------------------------------------------- Méthodes privées
 
-    string IP; 		// l'adresse IP à l'origine de la requête
+    string ip; 			// l'adresse IP à l'origine de la requête
     string logname;		// le nom d'utilisateur du visiteur
 	string user;		// le nom d'utilisateur authentifié
     string date; 		// la date de la requête, ainsi que le décalage par rapport à Greenwich

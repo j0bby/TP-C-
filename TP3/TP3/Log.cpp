@@ -48,7 +48,7 @@ Log::Log ( const Log & unLog )
 #ifdef MAP
 cout << "Appel au constructeur de copie de <Log>" << endl;
 #endif
-IP = unLog.IP;
+ip = unLog.ip;
 logname = unLog.logname;	
 user = unLog.user;		
 date = unLog.date;		
@@ -61,7 +61,7 @@ navigateur = unLog.navigateur;
 
 Log::Log(const string &log)
 // Algorithme :
-//
+// Parcours la string log, en s'arretant sur des séparateurs particuliers.
 {
 #ifdef MAP
 	cout << "Appel au constructeur de <Log>" << endl;
@@ -73,15 +73,15 @@ Log::Log(const string &log)
 	}
 	else
 	{
-		size_t posDebut, posFin;
+		size_t posDebut, posFin; // variables de position pour parcourir la chaine
 
 		posDebut = 0; 
 		posFin = 0;
 
-		// récupération de l'IP
+		// récupération de l'ip
 		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
-			IP = log.substr(posDebut, posFin);
+			ip = log.substr(posDebut, posFin);
 			posDebut = posFin +1; 
 			cout << posDebut << " " << log[posDebut] << endl;
 			cout << posFin << " " << log[posFin] << endl;
@@ -205,15 +205,16 @@ Log::Log(const string &log)
 
 		// tous les attributs sont initialisés
 
-		if (posDebut!=log.npos)	// la chaine n'est pas vide
+		if (posDebut!=log.npos)	// il n'y a pas plus d'infos dans le log.
 		{
 			cerr << "[LOG] erreur de remplissage, il reste: ";
 			cerr << log.substr(posDebut,log.npos) << endl;
 		}
 	} // fin du traitement sans erreur
+
 //#ifdef MAP
 	cout << "Les valeurs du Log sont :" << endl;
-	  cout << "IP"<<IP << endl;
+	  cout << "ip"<<ip << endl;
 	  cout <<"logname"<< logname << endl;
 	  cout <<"user"<< user << endl;
 	  cout << "date"<<date << endl;
@@ -230,7 +231,7 @@ Log::~Log()
 //
 {
 #ifdef MAP
-	//cout << "Appel au destructeur de <Log>" << endl;
+	out << "Appel au destructeur de <Log>" << endl;
 #endif
 } //----- Fin de ~Log
 
