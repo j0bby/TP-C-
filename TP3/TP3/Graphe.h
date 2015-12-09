@@ -98,7 +98,11 @@ private:
 	//---------------------------------------------------------- Classes amies
 
 	//-------------------------------------------------------- Classes privées
-
+	void creeGrapheHeure(map<string, Cible > ::const_iterator &Cible, const size_t &heure, int &valeurNoeud);
+	// Mode d'emploi :
+	// Pour la cible entré en paramètre , et l'heure, parcours les logs en mettant à jour les attributs liens et noeuds.
+	// Contrat :
+	// heure < 24
 	//----------------------------------------------------------- Types privés
 
 };
