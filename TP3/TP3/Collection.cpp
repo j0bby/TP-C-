@@ -18,7 +18,8 @@ using namespace std;
 #include "Collection.h"
 //------------------------------------------------------------- Constantes
 extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT;
-extern const string excluSiE[];
+extern const string EXCLUSIE[];
+const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -54,7 +55,7 @@ void Collection::Top10(const bool e, const int h)
 				/*vérification du type de fichier*/
 				debut = it1.first.rfind(SEP_PT);
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
-				if (find(excluSiE, excluSiE + 8, extensionFic) == excluSiE + 8)		//extension n'est pas dans la liste des extensions à exclure
+				if (find(EXCLUSIE, EXCLUSIE + 8, extensionFic) == EXCLUSIE + 8)		//extension n'est pas dans la liste des extensions à exclure
 				{
 					cpt = it1.second.Compte("GET", h);
 					if (cpt > max)
@@ -80,7 +81,7 @@ void Collection::Top10(const bool e, const int h)
 			{
 				fini = true;
 			}
-			else if (leTop.size < 10)	//il reste de la place, on insère et on continue
+			else if (leTop.size() < NOMBRETOP)	//il reste de la place, on insère et on continue
 			{
 				elementTop aInserer = { cibleMax, max };
 				leTop.push_back(aInserer);
@@ -129,7 +130,7 @@ void Collection::Top10(const bool e, const int h)
 			{
 				fini = true;
 			}
-			else if (leTop.size < 10)	//il reste de la place, on insère et on continue
+			else if (leTop.size() < NOMBRETOP)	//il reste de la place, on insère et on continue
 			{
 				elementTop aInserer = { cibleMax, max };
 				leTop.push_back(aInserer);
