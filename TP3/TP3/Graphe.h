@@ -20,7 +20,6 @@ using namespace std;
 typedef struct paire {
 	int NumReferer;
 	int NumCible;
-	int NbHits;
 
 };
 //------------------------------------------------------------------------ 

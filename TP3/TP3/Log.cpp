@@ -40,7 +40,7 @@ Log & Log::operator = ( const Log & unLog )
 
 //-------------------------------------------- Constructeurs - destructeur
 
-/*
+
 Log::Log ( const Log & unLog )
 // Algorithme :
 //
@@ -48,8 +48,16 @@ Log::Log ( const Log & unLog )
 #ifdef MAP
 cout << "Appel au constructeur de copie de <Log>" << endl;
 #endif
+IP = unLog.IP;
+logname = unLog.logname;	
+user = unLog.user;		
+date = unLog.date;		
+statut = unLog.statut;		
+taille = unLog.taille;	
+referer = unLog.referer;	
+navigateur = unLog.navigateur; 
 } //----- Fin de Log (constructeur de copie)
-*/
+
 
 Log::Log(const string &log)
 // Algorithme :
