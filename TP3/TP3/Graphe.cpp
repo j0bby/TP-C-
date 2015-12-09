@@ -64,10 +64,17 @@ Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1 
 	map<string , Cible > :: const_iterator debut,fin;
 	debut=aCol.pages.begin();
 	fin=aCol.pages.end();
+	int valeurNoeud = 0;
+	int valeurNoeudCible = 0;
 	for(debut ; debut!=fin; debut++) // itération de parcours de la map pages
 	{
-		bool estImage = false;
+		// création du noeud ; 
+		pair<string, int> aInserer = { debut->first, valeurNoeud };
+		noeuds.insert(aInserer);
+		valeurNoeudCible = valeurNoeud;
+		valeurNoeud++;
 
+		bool estImage = false;
 		if(e) // filtre en fonction des extensions
 		{
 			size_t posExtension = debut->first.find_last_of('.'); // position à partir de laquelle commence l'extension
@@ -83,17 +90,77 @@ Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1 
 			map<string, list<Log> > ::const_iterator typeReqDeb,typeReqFin;
 			typeReqDeb = debut->second.lesLogs[h].begin();
 			typeReqFin = debut->second.lesLogs[h].end();
-			while (debut!=fin && debut->first!="GET")
+			while (typeReqDeb != typeReqFin && typeReqDeb->first!="GET")
 			{
-				debut++;
+				typeReqDeb++;
 			}
-			if (debut->first != "GET") 
+			if (typeReqDeb->first == "GET")
 			{
+				if (typeReqDeb->second.empty()) //impossible
+				{
 
+				}
+				Log* cur = typeReqDeb->second.begin;
+				while (cur != typeReqDeb->second.end)
+				{
+					// si le noeud n'existe pas ! 
+					pair<string, int> aInserer = { cur->referer, valeurNoeud };
+					if (noeuds.insert(aInserer) == ? ? ? ? ) // si on peut insérer
+					{
+						valeurNoeud++;
+					}
+					
+					// si la paire n'existe pas
+					paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible};
+					pair<paire, int> insertion = { paireInserer, 1 };
+					if (liens.insert(insertion) == ? ? ? ? ? ? ) 
+					{
+						liens.find(paireInserer)->second++;
+					}
+					
+					cur++; // on change de log !!!
+				}
 			}
-		}
-		else if (h == -1 && !estImage) {
+		} // on a fini de filtrer en fonction de l'heure !!!!!!!! 
+		else if (h == -1 && !estImage) // si on veut pas de filtre sur les heures !!!!!!!!
+		{
+			for (size_t heure = 0; heure < 24; heure++) // on le fait pour chaques heures !!! 
+			{
+				map<string, list<Log> > ::const_iterator typeReqDeb, typeReqFin;
+				typeReqDeb = debut->second.lesLogs[h].begin();
+				typeReqFin = debut->second.lesLogs[h].end();
+				while (typeReqDeb != typeReqFin && typeReqDeb->first != "GET")
+				{
+					typeReqDeb++;
+				}
+				if (typeReqDeb->first == "GET")
+				{
+					if (typeReqDeb->second.empty()) //impossible
+					{
 
+					}
+					Log* cur = typeReqDeb->second.begin;
+					while (cur != typeReqDeb->second.end)
+					{
+						// si le noeud n'existe pas ! 
+						pair<string, int> aInserer = { cur->referer, valeurNoeud };
+						if (noeuds.insert(aInserer) == ? ? ? ? ) // si on peut insérer
+						{
+							valeurNoeud++;
+						}
+
+						// si la paire n'existe pas
+						paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible };
+						pair<paire, int> insertion = { paireInserer, 1 };
+						if (liens.insert(insertion) == ? ? ? ? ? ? )
+						{
+							liens.find(paireInserer)->second++;
+						}
+
+						cur++; // on change de log !!!
+					}
+				}
+			}
 		}
 	}
 
