@@ -16,10 +16,9 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
-#include "Cible.h"
 //------------------------------------------------------------- Constantes
-const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';
-const string excluSiE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css" };
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT;
+extern const string excluSiE[];
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -34,29 +33,125 @@ void Collection::Top10(const bool e, const int h)
 // Algorithme
 //
 {
-	list<string> leTop;
+	typedef pair<string, int> elementTop;	//pour les cibles du top : nom + nombre de hits
+	list<elementTop> leTop;		//liste du top10
+	bool fini = false;	//booleen pour vérifier les égalités, passe à true une fois qu'on est sur qu'il n'y a plus d'égalité ou que la map est vide
+	int max;	//maximum temporaire à chaque itération
+	string cibleMax;	//cible associée au maximum temporaire
+	int min;	//minimum de hits actuel du top
+	int cpt;	//stockage temporaire des comptes, pour éviter de refaire les opérations plusieurs fois
+	bool dejaDansTop;	//booleen permettant de savoir si la cible est deja dans le top
 
 	if (e)	//option e spécifiée
 	{
-		if (h == -1)	//option h spécifiée
+		string extensionFic;	//extension du fichier à vérifier
+		size_t debut;
+		while (!fini)
 		{
+			max = 0;
+			for (auto const &it1 : pages)	//parcours du dictionnaire de Cible
+			{
+				/*vérification du type de fichier*/
+				debut = it1.first.rfind(SEP_PT);
+				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
+				if (find(excluSiE, excluSiE + 8, extensionFic) == excluSiE + 8)		//extension n'est pas dans la liste des extensions à exclure
+				{
+					cpt = it1.second.Compte("GET", h);
+					if (cpt > max)
+					{
+						dejaDansTop = false;
+						for (auto const &it2 : leTop)	//vérification que la Cible ne soit pas déjà dans le top
+						{
+							if (it2.first == it1.first)
+							{
+								dejaDansTop = true;
+							}
+						}
+						if (!dejaDansTop)
+						{
+							max = cpt;
+							cibleMax = it1.first;
+						}
+					}
+				}
+			}	//on a trouvé le max dans le dictionnaire privé du top
 
-		}
-		else	//option h non spécifiée
-		{
-
-		}
+			if (max == 0)	//dico vide
+			{
+				fini = true;
+			}
+			else if (leTop.size < 10)	//il reste de la place, on insère et on continue
+			{
+				elementTop aInserer = { cibleMax, max };
+				leTop.push_back(aInserer);
+				min = max;	//on met à jour le minimum du top
+			}
+			else	//il n'y a plus de place
+			{
+				if (max == min)		//cas d'égalité, on insère quand même, et on continue
+				{
+					elementTop aInserer = { cibleMax, max };
+					leTop.push_back(aInserer);
+				}
+				else	//il n'y a pas égalité
+				{
+					fini = true;
+				}
+			}
+		}	//fin while(!fini)
 	}
 	else	//option e non-spécifiée
 	{
-		if (h == -1)	//option h spécifiée
+		while (!fini)
 		{
-
-		}
-		else	//option h non spécifiée
-		{
-
-		}
+			max = 0;
+			for (auto const &it1 : pages)	//parcours du dictionnaire de Cible
+			{
+				cpt = it1.second.Compte("GET", h);
+				if (cpt > max)
+				{
+					dejaDansTop = false;
+					for (auto const &it2 : leTop)	//vérification que la Cible ne soit pas déjà dans le top
+					{
+						if (it2.first == it1.first)
+						{
+							dejaDansTop = true;
+						}
+					}
+					if (!dejaDansTop)
+					{
+						max = cpt;
+						cibleMax = it1.first;
+					}
+				}
+			}	//on a trouvé le max dans le dictionnaire privé du top
+			if (max == 0)	//dico vide
+			{
+				fini = true;
+			}
+			else if (leTop.size < 10)	//il reste de la place, on insère et on continue
+			{
+				elementTop aInserer = { cibleMax, max };
+				leTop.push_back(aInserer);
+				min = max;	//on met à jour le minimum du top
+			}
+			else	//il n'y a plus de place
+			{
+				if (max == min)		//cas d'égalité, on insère quand même, et on continue
+				{
+					elementTop aInserer = { cibleMax, max };
+					leTop.push_back(aInserer);
+				}
+				else	//il n'y a pas égalité
+				{
+					fini = true;
+				}
+			}
+		}	//fin while(!fini)
+	} // on a notre top bien formé
+	for (auto const &iterTop : leTop)
+	{
+		cout << iterTop.first << " (" << iterTop.second << " hits)" << endl;
 	}
 }//----- Fin de Top10
 

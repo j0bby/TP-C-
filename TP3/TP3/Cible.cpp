@@ -15,8 +15,8 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //------------------------------------------------------ Include personnel
 #include "Cible.h"
 //------------------------------------------------------------- Constantes
-const int NB_HEURES = 24;
-const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':';
+extern const int NB_HEURES;
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE;
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -85,7 +85,7 @@ int Cible::Ajouter(const string & log)
 	return 1;
 }	//fin de Ajouter
 
-int Cible::Compte(const string & requete,  const int h)
+int Cible::Compte(const string & requete,  const int h) const
 // Algorithme :
 //
 {

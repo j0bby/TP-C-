@@ -18,8 +18,8 @@ using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
-extern const int NB_HEURES;
-extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE;	// a mettre en extern
+const int NB_HEURES = 24;
+const char SEP_REQ = '"', SEP = ' ', SEP_DATE_DEBUT = '[', SEP_DATE_FIN = ']', SEP_HEURE = ':', SEP_PT = '.';
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -46,7 +46,7 @@ public:
 	// Contrat :
 	//
 
-	int Compte(const string &requete, const int h =-1);
+	int Compte(const string &requete, const int h =-1) const;
 	// Mode d'emploi :
 	// Compte le nombre de logs consignés correspondant à la requête entrée en paramètre.
 	// Tient compte des options e et h pour filtrer les résultats.

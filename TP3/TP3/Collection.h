@@ -15,7 +15,7 @@ copyright            : (C) 2015 par mfallouh_mvirsolvy
 #include "Cible.h"
 using namespace std;
 //------------------------------------------------------------- Constantes 
-extern const string excluSiE [];	//extensions à exclure si option e spécifiée
+const string excluSiE[8] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css" };	//extensions à exclure si option e spécifiée
 //------------------------------------------------------------------ Types 
 
 //------------------------------------------------------------------------ 
