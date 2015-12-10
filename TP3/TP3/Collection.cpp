@@ -53,7 +53,7 @@ void Collection::Top10(const bool e, const int h)
 			for (auto const &it1 : pages)	//parcours du dictionnaire de Cible
 			{
 				/*vérification du type de fichier*/
-				debut = it1.first.rfind(SEP_PT);
+				debut = it1.first.rfind(SEP_PT)+1;
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
 				if (find(EXCLUSIE, EXCLUSIE + 8, extensionFic) == EXCLUSIE + 8)		//extension n'est pas dans la liste des extensions à exclure
 				{
@@ -192,8 +192,8 @@ Collection::Collection(const string & nomFichier)
 		{
 			/* extraction de la cible de la requête */
 			getline(fichier, ligneLog);
-			size_t debut = ligneLog.find(SEP_REQ);
-			debut = ligneLog.find(SEP, debut);
+			size_t debut = ligneLog.find(SEP_REQ) +1;
+			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
 
