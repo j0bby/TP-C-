@@ -30,7 +30,7 @@ static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200
 int main()
 {
 	cout << "Programme de tests" << endl;
-	testCible();
+	testGraphe();
 	cout << "Appuyer sur entrée pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
@@ -105,7 +105,7 @@ static void testConstructLog2()
 
 static void testGraphe()
 {
-	
+	cout << "Test Graphe" << endl;
 	testGrapheConstruct();
 	testGrapheConstructE();
 	testGrapheConstructH();
@@ -114,22 +114,22 @@ static void testGraphe()
 }
 static void testGrapheConstruct()
 {
-	/*Collection col();
-	Graphe tGraphe(col);*/
+	cout << "Test du constructeur" << endl;
+	Collection col("test.in");
 }
 static void testGrapheConstructE()
 {
-
+	cout << "Test du constructeur avec -e" << endl;
 }
 static void testGrapheConstructH() 
 {
-
+	cout << "Test du constructeur avec -h" << endl;
 }
 static void testGrapheConstructEH() 
 {
-
+	cout << "Test du constructeur avec -e -h" << endl;
 }
 static void testGrapheGenereFichier() 
 {
-
+	cout << "Test Graphe::GenereFichier" << endl;
 }

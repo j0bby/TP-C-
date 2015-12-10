@@ -20,7 +20,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 
 extern const string EXCLUSIE[];
-
+extern const int NB_FORMAT;
 //---------------------------------------------------- Variables de classe
 int valeurNoeud;
 //----------------------------------------------------------- Types privés
@@ -56,23 +56,23 @@ Graphe::Graphe ( const Graphe & unGraphe )
 
 void Graphe::GenereFichier(const string & nomFichier)
 {
-	char* nomFich = nomFichier.c_str;
-	ofstream grapheFile(nomFich);
+	//char *nomFich = nomFichier.c_str;
+	ofstream grapheFile(nomFichier.c_str());
 	if (grapheFile) // le fichier est correct
 	{
 		// génération des noeuds 
 		cout << "digraph {" << endl;
 		map<string, int > ::const_iterator noeudsDebut, noeudsFin;
-		noeudsDebut = noeuds.begin;
-		noeudsFin = noeuds.end;
+		noeudsDebut = noeuds.begin();
+		noeudsFin = noeuds.end();
 		for (noeudsDebut; noeudsDebut != noeudsFin; noeudsDebut++)
 		{
 			cout << "node" << noeudsDebut->second << " [" << noeudsDebut->first << "];" << endl;
 		}
 		// génération des liens 
 		map<paire, int > ::const_iterator liensDebut, liensFin;
-		noeudsDebut = liens.begin;
-		noeudsFin = liens.end;
+		liensDebut = liens.begin();
+		liensFin = liens.end();
 		for (liensDebut; liensDebut != liensFin; liensDebut++)
 		{
 			cout << "node" << liensDebut->first.NumReferer << " -> node" << liensDebut->first.NumCible << " [label=\"" << liensDebut->second << "\"];" << endl;
@@ -88,7 +88,7 @@ void Graphe::GenereFichier(const string & nomFichier)
 	
 }
 
-Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1  )
+Graphe::Graphe ( const Collection &aCol, const bool e , const int h   )
 // Algorithme :
 //
 {
@@ -96,8 +96,8 @@ Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1 
     cout << "Appel au constructeur de <Graphe>" << endl;
 #endif
 	map<string , Cible > :: const_iterator debut,fin;
-	debut=aCol.pages.begin;
-	fin=aCol.pages.end;
+	debut=aCol.pages.begin();
+	fin=aCol.pages.end();
 	int valeurNoeud = 0;
 	int valeurNoeudCible = 0;
 	for(debut ; debut!=fin; debut++) // itération de parcours de la map pages
@@ -114,7 +114,7 @@ Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1 
 			size_t posExtension = debut->first.find_last_of('.'); // position à partir de laquelle commence l'extension
 			string Extension = debut->first.substr(posExtension, debut->first.npos); // l'extension
 			unsigned int i = 0;
-			while(!estImage && i<NB_FORMAT_IMAGE) // parcours les extensions images.
+			while(!estImage && i<NB_FORMAT) // parcours les extensions images.
 			{
 				estImage = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
 			}
@@ -237,8 +237,8 @@ void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & Cible, const s
 		{
 
 		}
-		Log* cur = typeReqDeb->second.begin;
-		while (cur != typeReqDeb->second.end) // parcours des logs
+		list<Log> :: const_iterator cur = typeReqDeb->second.begin();
+		while (cur != typeReqDeb->second.end()) // parcours des logs
 		{
 			// si le noeud n'existe pas ! 
 			pair<string, int> aInserer = { cur->referer, valeurNoeud };

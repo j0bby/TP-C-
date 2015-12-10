@@ -20,7 +20,17 @@ using namespace std;
 typedef struct paire {
 	int NumReferer;
 	int NumCible;
-
+	bool const& operator<(const paire & unePaire) const
+	{
+		if (this->NumCible != unePaire.NumCible)
+		{
+			return this->NumCible < unePaire.NumCible;
+		}
+		else
+		{
+			return this->NumReferer != unePaire.NumReferer;
+		}
+	}
 };
 //------------------------------------------------------------------------ 
 // Rôle de la classe <Graphe>
