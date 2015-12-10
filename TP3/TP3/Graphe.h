@@ -45,6 +45,11 @@ class Graphe
 
 public:
 	//----------------------------------------------------- Méthodes publiques
+	static bool EstImage(const string &adresse);
+	// Mode d'emploi : 
+	// vérifie si l'extension est celle d'une image
+	// Contrat :
+	// le paramètre est une string correspondant à une adresse bien formée
 
 	void GenereFichier(const string & nomFichier);
 	// Mode d'emploi :
@@ -101,17 +106,24 @@ protected:
 	map<paire, int> liens;		//dictionnaire de liens, associant à chaque paire(structure :
 								//referer et cible, identifiés par leurs numéros de noeud) son nombre de hits.
 
+	int valeurNoeud; // la valeur du prochain noeud ajouté dans la la map noeud
 private:
 	//------------------------------------------------------- Attributs privés
 
 	//---------------------------------------------------------- Classes amies
 
 	//-------------------------------------------------------- Classes privées
-	void creeGrapheHeure(map<string, Cible > ::const_iterator &Cible, const size_t &heure, int &valeurNoeud);
+	void creeGrapheHeure(map<string, Cible > ::const_iterator &Cible, const size_t &heure, int &valeurNoeud, bool e);
 	// Mode d'emploi :
 	// Pour la cible entré en paramètre , et l'heure, parcours les logs en mettant à jour les attributs liens et noeuds.
 	// Contrat :
 	// heure < 24
+
+	void creeNoeud(const string &page, const int &valeurNoeud);
+	// Mode d'emploi :
+	// Crée le noeud, si jamais il existe déjà, alors rien ne se passe
+	// Contrat :
+	// 
 	//----------------------------------------------------------- Types privés
 
 };
