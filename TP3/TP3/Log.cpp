@@ -127,7 +127,7 @@ Log::Log(const string &log)
 			posDebut = posFin + 3; 	
 												//on suprime bien SEP_DATE_FIN et SEP qui le suit
 		}
-		else										// SEP-DATE non trouvé
+		else										// SEP_DATE_FIN non trouvé
 		{
 			cerr << "[LOG] erreur dans <ip> : " << log << endl;
 			return;
@@ -205,7 +205,7 @@ Log::Log(const string &log)
 
 		// tous les attributs sont initialisés
 
-		if (posDebut!=log.npos)	// il n'y a pas plus d'infos dans le log.
+		if (posDebut!=log.size())	// il n'y a pas plus d'infos dans le log.
 		{
 			cerr << "[LOG] erreur de remplissage, il reste: ";
 			cerr << log.substr(posDebut,log.npos) << endl;
