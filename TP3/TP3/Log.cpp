@@ -83,8 +83,6 @@ Log::Log(const string &log)
 		{
 			ip = log.substr(posDebut, posFin);
 			posDebut = posFin +1; 
-			cout << posDebut << " " << log[posDebut] << endl;
-			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -97,8 +95,6 @@ Log::Log(const string &log)
 		{
 			user = log.substr(posDebut,posFin-posDebut);
 			posDebut = posFin + 1; 
-			cout << posDebut << " " << log[posDebut] << endl;
-			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -111,8 +107,6 @@ Log::Log(const string &log)
 		{
 			logname = log.substr(posDebut, posFin - posDebut);
 			posDebut = posFin + 2; 
-			cout << posDebut << " " << log[posDebut] << endl;
-			cout << posFin << " " << log[posFin] << endl;
 		}
 		else										// SEP non trouvé
 		{
@@ -212,7 +206,7 @@ Log::Log(const string &log)
 		}
 	} // fin du traitement sans erreur
 
-//#ifdef MAP
+/*#ifdef MAP
 	cout << "Les valeurs du Log sont :" << endl;
 	  cout << "ip"<<ip << endl;
 	  cout <<"logname"<< logname << endl;
@@ -222,7 +216,7 @@ Log::Log(const string &log)
 	  cout << "taille"<<taille << endl;
 	  cout << "referer"<<referer << endl;
 	  cout <<"nvigateur"<< navigateur << endl;
-//#endif
+#endif*/
 } //----- Fin de Log
 
 
