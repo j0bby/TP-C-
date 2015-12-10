@@ -90,14 +90,12 @@ int Cible::Compte(const string & requete,  const int h) const
 //
 {
 	int compte = 0;	//variable de retour
-	//map<string, list<Log>>::iterator it;	//itérateur pour le parcours de la map
 	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
 
 	if (h == -1)	//pas d'option h
 	{
 		for (int heure = 0; heure < 24; heure++)
 		{
-			//it = lesLogs[heure].find(requete);
 			if (lesLogs[heure].find(requete) != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
 			{
 					compte += lesLogs[heure].find(requete)->second.size();
@@ -106,7 +104,6 @@ int Cible::Compte(const string & requete,  const int h) const
 	}
 	else	//option h spécifiée
 	{
-		//it = lesLogs[h].find(requete);
 		if (lesLogs[h].find(requete) != lesLogs[h].end())	//si la requete est présente dans le dictionnaire
 		{
 			compte += lesLogs[h].find(requete)->second.size();
