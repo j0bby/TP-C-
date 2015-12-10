@@ -39,7 +39,7 @@ int Cible::Ajouter(const string & log)
 	int heureLocale;	//heure locale
 	int decalage;		//decalage par rapport à Greenwich
 	int heureGreenwich;	//heure de Greenwich
-	size_t debut = log.find(SEP_REQ);
+	size_t debut = log.find(SEP_REQ) +1;
 	size_t fin = log.find(SEP, debut);
 	if (debut != fin)
 	{
@@ -49,25 +49,25 @@ int Cible::Ajouter(const string & log)
 	{
 		//ERREUR
 	}
-	debut = log.find(SEP_DATE_DEBUT);
+	debut = log.find(SEP_DATE_DEBUT) +1;
 	fin = log.find(SEP_DATE_FIN);
 	if (debut != fin)
 	{
-		date = log.substr(debut, fin - debut);
+		date = log.substr(debut +1, fin - debut);
 	}
 	else
 	{
 		//ERREUR
 	}
-	debut = date.find(SEP_HEURE);
+	debut = date.find(SEP_HEURE) +1;
 	fin = date.find(SEP_HEURE, debut);
 	heureLocale = stoi(date.substr(debut, fin - debut));
 
-	debut = date.find(SEP, fin);
+	debut = date.find(SEP, fin) +1;
 	string::iterator itFin = date.end();
 	fin = distance(date.begin(), itFin);
 
-	decalage = stoi(date.substr(debut, fin - debut));
+	decalage = stoi(date.substr(debut, fin - debut)) / 100;
 	heureGreenwich = heureLocale - decalage;
 
 	pair<map<string, list<Log>>::iterator, bool> insertion;
@@ -90,26 +90,26 @@ int Cible::Compte(const string & requete,  const int h) const
 //
 {
 	int compte = 0;	//variable de retour
-	map<string, list<Log>>::iterator it;	//itérateur pour le parcours de la map
+	//map<string, list<Log>>::iterator it;	//itérateur pour le parcours de la map
 	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
 
 	if (h == -1)	//pas d'option h
 	{
 		for (int heure = 0; heure < 24; heure++)
 		{
-			it = lesLogs[heure].find(requete);
-			if (it != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
+			//it = lesLogs[heure].find(requete);
+			if (lesLogs[heure].find(requete) != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
 			{
-					compte += it->second.size();
+					compte += lesLogs[heure].find(requete)->second.size();
 			}
 		}
 	}
 	else	//option h spécifiée
 	{
-		it = lesLogs[h].find(requete);
-		if (it != lesLogs[h].end())	//si la requete est présente dans le dictionnaire
+		//it = lesLogs[h].find(requete);
+		if (lesLogs[h].find(requete) != lesLogs[h].end())	//si la requete est présente dans le dictionnaire
 		{
-			compte += it->second.size();
+			compte += lesLogs[h].find(requete)->second.size();
 		}
 	}
 	return compte;
@@ -131,7 +131,6 @@ Cible::Cible(const Cible & unCible)
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <Cible>" << endl;
 #endif
-	lesLogs = new map<string, list<Log>>[NB_HEURES];
 } //----- Fin de Cible (constructeur de copie)
 
 
@@ -152,7 +151,6 @@ Cible::~Cible()
 #ifdef MAP
 	cout << "Appel au destructeur de <Cible>" << endl;
 #endif
-	delete[] lesLogs;
 } //----- Fin de ~Cible
 
 

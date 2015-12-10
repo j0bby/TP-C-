@@ -91,7 +91,7 @@ protected:
 private:
 //------------------------------------------------------- Méthodes privées
 
-	map <string, list<Log>> *lesLogs;	// stock des logs. Tableau de 24 cases (1 par heure) 
+	map <string, list<Log>> lesLogs[24];	// stock des logs. Tableau de 24 cases (1 par heure) 
 										// contenant des listes de logs triées par type de requête,
 										// par le biais d'une map.
 

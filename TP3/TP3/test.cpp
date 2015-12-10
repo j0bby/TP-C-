@@ -30,8 +30,8 @@ static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200
 int main()
 {
 	cout << "Programme de tests" << endl;
-	testGraphe();
-	cout << "Appuyer sur entrée pour quitter" << endl;
+	testCible();
+	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
 	return 0;

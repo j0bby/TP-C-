@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Cible.cpp" />
     <ClCompile Include="Collection.cpp" />
+    <ClCompile Include="Graphe.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
