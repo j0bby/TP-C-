@@ -15,6 +15,14 @@ static void testLog();
 static void testConstructLog();
 static void testConstructLog2();
 
+static void testGraphe();
+static void testGrapheConstruct();
+static void testGrapheConstructE();
+static void testGrapheConstructH();
+static void testGrapheConstructEH();
+static void testGrapheGenereFichier();
+
+
 static const string logGet = "192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] \"GET / temps / 4IF16.html HTTP / 1.1\" 200 12106 \"http://intranet-if.insa-lyon.fr/temps/4IF15.html\" \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1\"";
 static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200] \"POST /temps/4IF20.html HTTP/1.1\" 200 5185 \"http://intranet-if.insa-lyon.fr/temps/4IF19.html\" \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1\"";
 
@@ -91,5 +99,37 @@ static void testConstructLog()
 }
 static void testConstructLog2()
 {
-	cout << "Test du constructeur 2" << endl;
+	cout << "Test du constructeur 2 -- resultat attendu; erreur dans statut" << endl;
+	Log tLog("192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200]");
+}
+
+static void testGraphe()
+{
+	
+	testGrapheConstruct();
+	testGrapheConstructE();
+	testGrapheConstructH();
+	testGrapheConstructEH();
+	testGrapheGenereFichier();
+}
+static void testGrapheConstruct()
+{
+	/*Collection col();
+	Graphe tGraphe(col);*/
+}
+static void testGrapheConstructE()
+{
+
+}
+static void testGrapheConstructH() 
+{
+
+}
+static void testGrapheConstructEH() 
+{
+
+}
+static void testGrapheGenereFichier() 
+{
+
 }

@@ -86,11 +86,10 @@ protected:
 	//----------------------------------------------------- Attributs protégés
 
 	map<string, int > noeuds;	// dictionnaire de nœuds associant à chaque 
-							    // adresse de page son numero pour le tracé du graphe.
-							    // Le numéro est affecté par ordre de consultation des pages
+							    // adresse de page son numero pour le tracé du graphe
 
 	map<paire, int> liens;		//dictionnaire de liens, associant à chaque paire(structure :
-								//referer et cible, identifiés par leurs numéros) son nombre de hits.
+								//referer et cible, identifiés par leurs numéros de noeud) son nombre de hits.
 
 private:
 	//------------------------------------------------------- Attributs privés

@@ -18,9 +18,8 @@ using namespace std;
 #include "Graphe.h"
 
 //------------------------------------------------------------- Constantes
-const int NB_FORMAT_IMAGE=7;
-const string FORMAT_IMAGE = ".jpg";// , ".png", ".jpeg", ".tga", ".gif", ".tiff", ".bmp" };
 
+extern const string EXCLUSIE[];
 
 //---------------------------------------------------- Variables de classe
 int valeurNoeud;
@@ -117,7 +116,7 @@ Graphe::Graphe ( const Collection &aCol, const bool e = false, const int h = -1 
 			unsigned int i = 0;
 			while(!estImage && i<NB_FORMAT_IMAGE) // parcours les extensions images.
 			{
-				estImage = Extension.compare(FORMAT_IMAGE) == 0;// si l'extension est celle d'une image
+				estImage = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
 			}
 		}
 		if(h!=-1 && !estImage) // filtre en fonction de l'heure
