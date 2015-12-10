@@ -17,7 +17,7 @@ using namespace std;
 #include "Log.h"
 
 //------------------------------------------------------------- Constantes
-const char SEP = ' ', SEP_DATE = ']', SEP_REQ = '"';
+
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -121,11 +121,11 @@ Log::Log(const string &log)
 		}
 
 		//récupération date
-		if ((posFin = log.find(SEP_DATE,posDebut)) != log.npos)// SEP_DATE trouvé
+		if ((posFin = log.find(SEP_DATE_FIN,posDebut)) != log.npos)// SEP_DATE_FIN trouvé
 		{
 			date = log.substr(posDebut, posFin - posDebut);
 			posDebut = posFin + 3; 	
-												//on suprime bien SEP_DATE et SEP qui le suit
+												//on suprime bien SEP_DATE_FIN et SEP qui le suit
 		}
 		else										// SEP-DATE non trouvé
 		{
