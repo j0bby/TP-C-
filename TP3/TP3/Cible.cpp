@@ -70,6 +70,12 @@ int Cible::Ajouter(const string & log)
 	decalage = stoi(date.substr(debut, fin - debut)) / 100;
 	heureGreenwich = heureLocale - decalage;
 
+
+#ifdef MAP
+	cout << "Insertion du log -- heure = " << heureGreenwich << endl;
+#endif
+
+
 	pair<map<string, list<Log>>::iterator, bool> insertion;
 	list<Log> listeLogs;
 	listeLogs.push_back(nouveauLog);
@@ -78,9 +84,15 @@ int Cible::Ajouter(const string & log)
 	if (!insertion.second)	//si la liste existait déjà dans la map
 	{
 		lesLogs[heureGreenwich].find(requete)->second.push_back(nouveauLog);	//on ajoute le nouveau log à la liste
+#ifdef MAP
+		cout << "Requête " << requete << " déjà présente pour la Cible, ajout à la lliste" << endl;
+#endif
 		return 0;
 	}
 
+#ifdef MAP
+	cout << "Nouvelle requête trouvée: " << requete << ", ajout à la Cible" << endl;
+#endif
 
 	return 1;
 }	//fin de Ajouter
