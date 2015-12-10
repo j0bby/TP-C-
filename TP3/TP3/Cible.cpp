@@ -12,6 +12,7 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //-------------------------------------------------------- Include système
 #include <map>
 #include <string>
+#include <iostream>
 //------------------------------------------------------ Include personnel
 #include "Cible.h"
 //------------------------------------------------------------- Constantes
