@@ -48,28 +48,44 @@ int Cible::Ajouter(const string & log)
 	}
 	else
 	{
-		//ERREUR
+		cerr << "erreur de parsing de l'adresse cible : requete" << endl;	//ERREUR
+		return 1;
 	}
 	debut = log.find(SEP_DATE_DEBUT) +1;
 	fin = log.find(SEP_DATE_FIN);
 	if (debut != fin)
 	{
-		date = log.substr(debut +1, fin - debut);
+		date = log.substr(debut+1, fin - debut);
 	}
 	else
 	{
-		//ERREUR
+		cerr << "erreur de parsing de l'adresse cible : date" << endl;	//ERREUR
+		return 1;
 	}
 	debut = date.find(SEP_HEURE) +1;
 	fin = date.find(SEP_HEURE, debut);
-	heureLocale = stoi(date.substr(debut, fin - debut));
-
+	if (debut != fin)
+	{
+		heureLocale = stoi(date.substr(debut, fin - debut));
+	}
+	else
+	{
+		cerr << "erreur de parsing de l'adresse cible : heure locale" << endl;	//ERREUR
+		return 1;
+	}
 	debut = date.find(SEP, fin) +1;
 	string::iterator itFin = date.end();
 	fin = distance(date.begin(), itFin);
-
-	decalage = stoi(date.substr(debut, fin - debut)) / 100;
-	heureGreenwich = heureLocale - decalage;
+	if (debut != fin)
+	{
+		decalage = stoi(date.substr(debut, fin - debut)) / 100;
+		heureGreenwich = heureLocale - decalage;
+	}
+	else
+	{
+		cerr << "erreur de parsing de l'adresse cible : decalage greenwich" << endl;	//ERREUR
+		return 1;
+	}
 
 
 #ifdef MAP
@@ -88,14 +104,13 @@ int Cible::Ajouter(const string & log)
 #ifdef MAP
 		cout << "Requete " << requete << " deja presente pour la Cible, ajout a la liste" << endl;
 #endif
-		return 0;
 	}
 
 #ifdef MAP
 	cout << "Nouvelle requete trouvee: " << requete << ", ajout a la Cible" << endl;
 #endif
 
-	return 1;
+	return 0;
 }	//fin de Ajouter
 
 int Cible::Compte(const string & requete,  const int h) const

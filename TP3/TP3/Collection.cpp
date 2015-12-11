@@ -17,7 +17,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
 //------------------------------------------------------------- Constantes
-extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT;
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT;
 extern const string EXCLUSIE[];
 const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
 //---------------------------------------------------- Variables de classe
@@ -37,7 +37,7 @@ void Collection::Top10(const bool e, const int h)
 	typedef pair<string, int> elementTop;	//pour les cibles du top : nom + nombre de hits
 	list<elementTop> leTop;		//liste du top10
 	bool fini = false;	//booleen pour vérifier les égalités, passe à true une fois qu'on est sur qu'il n'y a plus d'égalité ou que la map est vide
-	int max;	//maximum temporaire à chaque itération
+	int max = 0;	//maximum temporaire à chaque itération
 	string cibleMax;	//cible associée au maximum temporaire
 	int min;	//minimum de hits actuel du top
 	int cpt;	//stockage temporaire des comptes, pour éviter de refaire les opérations plusieurs fois
@@ -50,6 +50,7 @@ void Collection::Top10(const bool e, const int h)
 		while (!fini)
 		{
 			max = 0;
+			cibleMax = "";
 			for (auto const &it1 : pages)	//parcours du dictionnaire de Cible
 			{
 				/*vérification du type de fichier*/
@@ -185,29 +186,27 @@ Collection::Collection(const string & nomFichier)
 	cout << "Appel au constructeur de <Collection>" << endl;
 #endif
 	ifstream fichier (nomFichier.c_str());
-	if (fichier)	//fichier trouvé
+	char testFin;	//string utilisée pour tester la fin du fichier en tentant une lecture
+	if (fichier.good())	//fichier trouvé et non vide
 	{
 		string ligneLog;
-		while (fichier)		//tant que l'on a pas fini de lire le fichier
+		while (getline(fichier, ligneLog))		//tant que l'on a pas fini de lire le fichier
 		{
 			/* extraction de la cible de la requête */
-			getline(fichier, ligneLog);
+			
 			size_t debut = ligneLog.find(SEP_REQ) +1;
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
 			adrCible = adrCible.substr(0, adrCible.find_last_of(SEP));
+			adrCible = adrCible.substr(0, adrCible.find_last_of(SEP_INT));
 
 			/* mise à jour du dictionnaire de Cible */
-			pair<map<string, Cible>::iterator, bool> insertion;		//pour recevoir le résultat de la tentative d'insertion
 			Cible cibleInser;
 			cibleInser.Ajouter(ligneLog);
 			pair<string, Cible> aInserer = { adrCible, cibleInser };	// créér une paire pour l'insertion
-			insertion = pages.insert(aInserer);	//tentative d'insertion, on récupère le résultat
-			if (!insertion.second)	//si la Cible existait déjà dans la map
-			{
-				pages.find(adrCible)->second.Ajouter(ligneLog);	//on ajoute le nouveau log à la Cible
-			}
+			pages.insert(aInserer);	//tentative d'insertion, ajoute la requete si elle n'est pas presente
+			pages.find(adrCible)->second.Ajouter(ligneLog);	//on ajoute le nouveau log à la Cible
 		}	//fin du fichier atteinte
 	}
 	else	//fichier non trouvé

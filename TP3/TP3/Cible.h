@@ -20,7 +20,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 const int NB_HEURES = 24;
 extern const char SEP_REQ , SEP ,  SEP_DATE_FIN ;
-const char SEP_DATE_DEBUT = '[', SEP_HEURE = ':', SEP_PT = '.';
+const char SEP_DATE_DEBUT = '[', SEP_HEURE = ':', SEP_PT = '.', SEP_INT = '?';
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
