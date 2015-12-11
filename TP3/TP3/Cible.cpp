@@ -86,13 +86,13 @@ int Cible::Ajouter(const string & log)
 	{
 		lesLogs[heureGreenwich].find(requete)->second.push_back(nouveauLog);	//on ajoute le nouveau log à la liste
 #ifdef MAP
-		cout << "Requête " << requete << " déjà présente pour la Cible, ajout à la lliste" << endl;
+		cout << "Requete " << requete << " deja presente pour la Cible, ajout a la liste" << endl;
 #endif
 		return 0;
 	}
 
 #ifdef MAP
-	cout << "Nouvelle requête trouvée: " << requete << ", ajout à la Cible" << endl;
+	cout << "Nouvelle requete trouvee: " << requete << ", ajout a la Cible" << endl;
 #endif
 
 	return 1;
