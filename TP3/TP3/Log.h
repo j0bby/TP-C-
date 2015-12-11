@@ -13,7 +13,7 @@ using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
-const char SEP = ' ', SEP_DATE_FIN = ']', SEP_REQ = '"';
+const char SEP = ' ', SEP_DATE_FIN = ']', SEP_REQ = '"', SEP_URL = '/';
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -77,6 +77,7 @@ private:
     string statut; 		// le retour de la requête HTML
 	string taille; 		// quantité de données transférées en octets
     string referer; 	// adresse depuis laquelle a été émise la requête
+	string url;			// URL du referer en entier
     string navigateur; 	// infos navigateur
 
 protected:

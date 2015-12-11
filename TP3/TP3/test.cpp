@@ -6,14 +6,15 @@
 #include "Log.h"
 using namespace std;
 
+static void testLog();
+static void testConstructLog();
+static void testConstructLog2();
+
+
 static void testCible();
 static void testConstructCible();
 static void testAjouterCible();
 static void testCompteCible();
-
-static void testLog();
-static void testConstructLog();
-static void testConstructLog2();
 
 static void testGraphe();
 static void testGrapheConstruct();
@@ -30,8 +31,6 @@ static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200
 int main()
 {
 	cout << "Programme de tests" << endl;
-	//testCible();
-	//testLog();
 	testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
@@ -118,20 +117,37 @@ static void testGrapheConstruct()
 {
 	cout << "Test du constructeur" << endl;
 	Collection col("test.in");
+	Graphe tGraphe(col);
+	tGraphe.GenereFichier("test.txt");
 }
 static void testGrapheConstructE()
 {
 	cout << "Test du constructeur avec -e" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, true);
+	tGraphe.GenereFichier("testE.txt");
 }
 static void testGrapheConstructH() 
 {
 	cout << "Test du constructeur avec -h" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, false, 11);
+	tGraphe.GenereFichier("testH.txt");
 }
 static void testGrapheConstructEH() 
 {
 	cout << "Test du constructeur avec -e -h" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, true,11);
+	tGraphe.GenereFichier("testEH.txt");
 }
 static void testGrapheGenereFichier() 
 {
 	cout << "Test Graphe::GenereFichier" << endl;
+	cout << "/temps/4IF20.html" << endl;
+	string adresse = "/temps/4IF20.html";
+	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
+	string Extension = adresse.substr(posExtension+1, adresse.npos);
+	cout << posExtension<<endl;
+	cout << Extension;
 }

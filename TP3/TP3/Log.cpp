@@ -173,11 +173,35 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération referer
+		// récupération url
+		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
+		{
+			url = log.substr(posDebut, posFin - posDebut);
+			// on ne modifie pas la position de début  
+		}
+		else										// SEP_REQ non trouvé
+		{
+			cerr << "[LOG] erreur dans <referer> : " << log << endl;
+			return;
+		}
+
+		// recupération de réferer 
+		for (int i = 0; i < 3; i++) // on accede à l'adresse de la page (on enlève HTPP://...../)
+		{
+			if ((posFin = log.find(SEP_URL, posDebut)) != log.npos)	//SEP_REQ trouvé
+			{
+				posDebut = posFin + (i!=2);
+			}
+			else										// SEP_REQ non trouvé
+			{
+				cerr << "[LOG] erreur dans <referer> : " << log << endl;
+				return;
+			}
+		}
 		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
 		{
 			referer = log.substr(posDebut, posFin - posDebut);
-			posDebut = posFin + 3; 
+			posDebut = posFin + 3;
 		}
 		else										// SEP_REQ non trouvé
 		{
@@ -216,7 +240,7 @@ Log::Log(const string &log)
 	  cout << "taille"<<taille << endl;
 	  cout << "referer"<<referer << endl;
 	  cout <<"nvigateur"<< navigateur << endl;
-#endif*/
+//#endif*/
 } //----- Fin de Log
 
 

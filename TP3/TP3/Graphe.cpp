@@ -57,29 +57,30 @@ Graphe::Graphe ( const Graphe & unGraphe )
 bool Graphe::EstImage(const string & adresse)
 {
 	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
-	string Extension = adresse.substr(posExtension,adresse.npos); // l'extension
-	unsigned int i = 0;
-	for (int i = 0; i < NB_FORMAT; i++) // parcours les extensions images.
+	string Extension = adresse.substr(posExtension + 1,adresse.npos); // l'extension
+	bool image = false;
+	int i = 0;
+	while( i < NB_FORMAT && !image ) // parcours les extensions images.
 	{
-		return Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
+		image = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
+		i++;
 	}
-	return false;
+	return image;
 }
 
 void Graphe::GenereFichier(const string & nomFichier)
 {
-	//char *nomFich = nomFichier.c_str;
 	ofstream grapheFile(nomFichier.c_str());
 	if (grapheFile) // le fichier est correct
 	{
 		// génération des noeuds 
-		cout << "digraph {" << endl;
+		grapheFile << "digraph {" << endl;
 		map<string, int > ::const_iterator noeudsDebut, noeudsFin;
 		noeudsDebut = noeuds.begin();
 		noeudsFin = noeuds.end();
 		for (noeudsDebut; noeudsDebut != noeudsFin; noeudsDebut++)
 		{
-			cout << "node" << noeudsDebut->second << " [" << noeudsDebut->first << "];" << endl;
+			grapheFile << "node" << noeudsDebut->second << " [" << noeudsDebut->first << "];" << endl;
 		}
 		// génération des liens 
 		map<paire, int > ::const_iterator liensDebut, liensFin;
@@ -87,10 +88,10 @@ void Graphe::GenereFichier(const string & nomFichier)
 		liensFin = liens.end();
 		for (liensDebut; liensDebut != liensFin; liensDebut++)
 		{
-			cout << "node" << liensDebut->first.NumReferer << " -> node" << liensDebut->first.NumCible << " [label=\"" << liensDebut->second << "\"];" << endl;
+			grapheFile << "node" << liensDebut->first.NumReferer << " -> node" << liensDebut->first.NumCible << " [label=\"" << liensDebut->second << "\"];" << endl;
 		}
 
-		cout << "}" << endl;
+		grapheFile << "}" << endl;
 	}
 	else
 	{
@@ -127,51 +128,20 @@ Graphe::Graphe ( const Collection &aCol, const bool e , const int h   ) :
 
 		if (!estImage) // création du noeud ,si la cible est pas une image -e 
 		{   
-			creeNoeud( debut->first, valeurNoeud ); 
-			valeurNoeudCible = valeurNoeud;
-			valeurNoeud++;
+			if (creeNoeud(debut->first, valeurNoeud))
+			{
+				valeurNoeudCible = valeurNoeud;
+				valeurNoeud++;
+			}
+			else 
+			{
+				valeurNoeudCible = noeuds.find(debut->first)->second;
+
+			}
 		} // fin de la création
 
 		if(h!=-1 && !estImage) // filtre en fonction de l'heure
 		{
-			/*// déclaration des itérateurs de parcours 
-			map<string, list<Log> > ::const_iterator typeReqDeb,typeReqFin;
-			typeReqDeb = debut->second.lesLogs[h].begin();
-			typeReqFin = debut->second.lesLogs[h].end();
-
-
-			while (typeReqDeb != typeReqFin && typeReqDeb->first!="GET")// isolation des hits
-			{
-				typeReqDeb++;
-			}
-
-			if (typeReqDeb->first == "GET") // si la page a bien été hit au moins une fois.
-			{
-				if (typeReqDeb->second.empty()) //impossible
-				{
-
-				}
-				Log* cur = typeReqDeb->second.begin;
-				while (cur != typeReqDeb->second.end) // parcours des logs
-				{
-					// si le noeud n'existe pas ! 
-					pair<string, int> aInserer = { cur->referer, valeurNoeud };
-					if (!noeuds.insert(aInserer).second) // si le noeud est déjà présent
-					{
-						valeurNoeud++;
-					}
-					
-					// si la paire n'existe pas
-					paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible};
-					pair<paire, int> insertion = { paireInserer, 1 };
-					if (!liens.insert(insertion).second) 
-					{
-						liens.find(paireInserer)->second++;
-					}
-					
-					cur++; // on change de log !!!
-				}
-			}*/
 			creeGrapheHeure(debut, h, valeurNoeudCible, e);
 
 		} // on a fini de filtrer en fonction de l'heure !!!!!!!! 
@@ -180,40 +150,6 @@ Graphe::Graphe ( const Collection &aCol, const bool e , const int h   ) :
 			for (size_t heure = 0; heure < 24; heure++) // on le fait pour chaques heures !!! 
 			{
 				creeGrapheHeure(debut, heure, valeurNoeudCible, e);
-				/*map<string, list<Log> > ::const_iterator typeReqDeb, typeReqFin;
-				typeReqDeb = debut->second.lesLogs[h].begin();
-				typeReqFin = debut->second.lesLogs[h].end();
-				while (typeReqDeb != typeReqFin && typeReqDeb->first != "GET")
-				{
-					typeReqDeb++;
-				}
-				if (typeReqDeb->first == "GET")
-				{
-					if (typeReqDeb->second.empty()) //impossible
-					{
-
-					}
-					Log* cur = typeReqDeb->second.begin;
-					while (cur != typeReqDeb->second.end)
-					{
-						// si le noeud n'existe pas ! 
-						pair<string, int> aInserer = { cur->referer, valeurNoeud };
-						if (!noeuds.insert(aInserer).second) // si on peut insérer
-						{
-							valeurNoeud++;
-						}
-
-						// si la paire n'existe pas
-						paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible };
-						pair<paire, int> insertion = { paireInserer, 1 };
-						if (!liens.insert(insertion).second )
-						{
-							liens.find(paireInserer)->second++;
-						}
-
-						cur++; // on change de log !!!
-					}
-				}*/
 
 			}
 		}
@@ -235,48 +171,54 @@ void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & Cible, const s
 {
 	// déclaration des itérateurs de parcours 
 	map<string, list<Log> > ::const_iterator typeReqDeb, typeReqFin;
-	typeReqDeb = Cible->second.lesLogs[heure].begin();
-	typeReqFin = Cible->second.lesLogs[heure].end();
-
-
-	while (typeReqDeb != typeReqFin && typeReqDeb->first != "GET")// isolation des hits
+	if (!Cible->second.lesLogs[heure].empty())// si la liste est non vide
 	{
-		typeReqDeb++;
-	}
+		typeReqDeb = Cible->second.lesLogs[heure].begin();
+		typeReqFin = Cible->second.lesLogs[heure].end();
 
-	if (typeReqDeb->first == "GET") // si la page a bien été hit au moins une fois.
-	{
-		
-		list<Log> :: const_iterator cur = typeReqDeb->second.begin(); // itérateur de parcours des logs
-		while (cur != typeReqDeb->second.end()) // parcours des logs
+
+		while (typeReqDeb != typeReqFin && typeReqDeb->first != "GET")// isolation des hits
 		{
-			// on vérifie si c'est une image ou non
-			if (!e ||(e && !EstImage(cur->referer)))
-			{
-				// si le noeud n'existe pas ! 
-				pair<string, int> aInserer = { cur->referer, valeurNoeud };
-				if (!noeuds.insert(aInserer).second) // si le noeud n'est pas déjà présent
-				{
-					valeurNoeud++;
-				}
+			typeReqDeb++;
+		}
 
-				// si la paire n'existe pas
-				paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible };
-				pair<paire, int> insertion = { paireInserer, 1 };
-				if (!liens.insert(insertion).second)
+		if (typeReqDeb != typeReqFin && typeReqDeb->first == "GET") // si la page a bien été hit au moins une fois.
+		{
+
+			list<Log> ::const_iterator cur = typeReqDeb->second.begin(); // itérateur de parcours des logs
+			while (cur != typeReqDeb->second.end()) // parcours des logs
+			{
+				// on vérifie si c'est une image ou non
+				if (!e || (e && !EstImage(cur->referer)))
 				{
-					liens.find(paireInserer)->second++;
+					// si le noeud n'existe pas ! 
+					if (creeNoeud(cur->referer, valeurNoeud)) // si le noeud n'est pas déjà présent
+					{
+						valeurNoeud++;
+					}
+
+					// si la paire n'existe pas
+					paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible };
+					pair<paire, int> insertion = { paireInserer, 1 };
+					pair<map<paire,int >::iterator, bool> bInsertion;
+					bInsertion = liens.insert(insertion);
+					if (!bInsertion.second)
+					{
+						liens.find(paireInserer)->second++;
+					}
 				}
+				cur++; // on change de log !!!
 			}
-			cur++; // on change de log !!!
 		}
 	}
 }
 
-void Graphe::creeNoeud(const string & page, const int & valeurNoeud)
+bool Graphe::creeNoeud(const string & page, const int & valeurNoeud)
 {
 	pair<string, int> aInserer = { page, valeurNoeud }; // le noeud
-	noeuds.insert(aInserer);
+	pair<map<string, int >::iterator, bool> retInsertion;
+	retInsertion = noeuds.insert(aInserer);
+	return retInsertion.second;
 }
 
 

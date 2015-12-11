@@ -22,13 +22,13 @@ typedef struct paire {
 	int NumCible;
 	bool const& operator<(const paire & unePaire) const
 	{
-		if (this->NumCible != unePaire.NumCible)
+		if (this->NumReferer != unePaire.NumReferer)
 		{
-			return this->NumCible < unePaire.NumCible;
+			return this->NumReferer < unePaire.NumReferer;
 		}
 		else
 		{
-			return this->NumReferer != unePaire.NumReferer;
+			return this->NumCible < unePaire.NumCible;
 		}
 	}
 };
@@ -119,7 +119,7 @@ private:
 	// Contrat :
 	// heure < 24
 
-	void creeNoeud(const string &page, const int &valeurNoeud);
+	bool creeNoeud(const string &page, const int &valeurNoeud);
 	// Mode d'emploi :
 	// Crée le noeud, si jamais il existe déjà, alors rien ne se passe
 	// Contrat :
