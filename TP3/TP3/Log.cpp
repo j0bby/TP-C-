@@ -249,7 +249,7 @@ Log::~Log()
 //
 {
 #ifdef MAP
-	out << "Appel au destructeur de <Log>" << endl;
+	cout << "Appel au destructeur de <Log>" << endl;
 #endif
 } //----- Fin de ~Log
 
