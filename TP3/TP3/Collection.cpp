@@ -196,6 +196,7 @@ Collection::Collection(const string & nomFichier)
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
+			adrCible = adrCible.substr(0, adrCible.find_last_of(SEP));
 
 			/* mise à jour du dictionnaire de Cible */
 			pair<map<string, Cible>::iterator, bool> insertion;		//pour recevoir le résultat de la tentative d'insertion
