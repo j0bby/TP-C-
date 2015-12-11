@@ -6,14 +6,15 @@
 #include "Log.h"
 using namespace std;
 
+static void testLog();
+static void testConstructLog();
+static void testConstructLog2();
+
+
 static void testCible();
 static void testConstructCible();
 static void testAjouterCible();
 static void testCompteCible();
-
-static void testLog();
-static void testConstructLog();
-static void testConstructLog2();
 
 static void testGraphe();
 static void testGrapheConstruct();
@@ -30,7 +31,7 @@ static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200
 int main()
 {
 	cout << "Programme de tests" << endl;
-	testCible();
+	testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
@@ -116,6 +117,8 @@ static void testGrapheConstruct()
 {
 	cout << "Test du constructeur" << endl;
 	Collection col("test.in");
+	Graphe tGraphe(col);
+	tGraphe.GenereFichier("test.txt");
 }
 static void testGrapheConstructE()
 {
