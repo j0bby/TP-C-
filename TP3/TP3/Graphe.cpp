@@ -57,13 +57,15 @@ Graphe::Graphe ( const Graphe & unGraphe )
 bool Graphe::EstImage(const string & adresse)
 {
 	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
-	string Extension = adresse.substr(posExtension,adresse.npos); // l'extension
-	unsigned int i = 0;
-	for (int i = 0; i < NB_FORMAT; i++) // parcours les extensions images.
+	string Extension = adresse.substr(posExtension + 1,adresse.npos); // l'extension
+	bool image = false;
+	int i = 0;
+	while( i < NB_FORMAT && !image ) // parcours les extensions images.
 	{
-		return Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
+		image = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
+		i++;
 	}
-	return false;
+	return image;
 }
 
 void Graphe::GenereFichier(const string & nomFichier)

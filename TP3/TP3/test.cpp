@@ -123,16 +123,31 @@ static void testGrapheConstruct()
 static void testGrapheConstructE()
 {
 	cout << "Test du constructeur avec -e" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, true);
+	tGraphe.GenereFichier("testE.txt");
 }
 static void testGrapheConstructH() 
 {
 	cout << "Test du constructeur avec -h" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, false, 11);
+	tGraphe.GenereFichier("testH.txt");
 }
 static void testGrapheConstructEH() 
 {
 	cout << "Test du constructeur avec -e -h" << endl;
+	Collection col("test.in");
+	Graphe tGraphe(col, true,11);
+	tGraphe.GenereFichier("testEH.txt");
 }
 static void testGrapheGenereFichier() 
 {
 	cout << "Test Graphe::GenereFichier" << endl;
+	cout << "/temps/4IF20.html" << endl;
+	string adresse = "/temps/4IF20.html";
+	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
+	string Extension = adresse.substr(posExtension+1, adresse.npos);
+	cout << posExtension<<endl;
+	cout << Extension;
 }
