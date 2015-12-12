@@ -201,6 +201,8 @@ Log::Log(const string &log)
 		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
 		{
 			referer = log.substr(posDebut, posFin - posDebut);
+			referer = referer.substr(0, referer.find(';')); //enlever tout ce qui est apres un ;
+			referer = referer.substr(0, referer.find('?')); //enlever tout ce qui est après un ?
 			posDebut = posFin + 3;
 		}
 		else										// SEP_REQ non trouvé
@@ -208,7 +210,6 @@ Log::Log(const string &log)
 			cerr << "[LOG] erreur dans <referer> : " << log << endl;
 			return;
 		}
-
 		// récupération navigateur
 		if ((posFin = log.find(SEP_REQ,posDebut)) != log.npos)	// SEP trouvé
 		{
