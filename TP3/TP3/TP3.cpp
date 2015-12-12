@@ -26,11 +26,21 @@ int main(int argc, char* argv[])
 		else
 		{
 			cerr << "Nom du fichier de logs manquant ou extension invalide" << endl;
+#ifdef MAP
+			string virsolvy;
+			cin >> virsolvy;
+#endif
+			return 1;
 		}
 	}
 	else
 	{
 		cerr << "Nom du fichier de logs manquant" << endl;
+#ifdef MAP
+		string virsolvy;
+		cin >> virsolvy;
+#endif
+		return 1;
 	}
 
 
