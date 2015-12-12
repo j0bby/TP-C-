@@ -45,8 +45,8 @@ int main()
 	cout << "Programme de tests" << endl;
 	//testLog();
 	//testCible();
-	testCollection();
-	//testGraphe();
+	//testCollection();
+	testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
@@ -160,12 +160,7 @@ static void testGrapheConstructEH()
 static void testGrapheGenereFichier() 
 {
 	cout << "Test Graphe::GenereFichier" << endl;
-	cout << "/temps/4IF20.html" << endl;
-	string adresse = "/temps/4IF20.html";
-	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
-	string Extension = adresse.substr(posExtension+1, adresse.npos);
-	cout << posExtension<<endl;
-	cout << Extension;
+	
 }
 
 static void testCollection()

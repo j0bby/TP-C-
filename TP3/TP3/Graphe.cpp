@@ -118,41 +118,24 @@ Graphe::Graphe ( const Collection &aCol, const bool e , const int h   ) :
 	int valeurNoeudCible = 0; // la valeur de la cible, donc associé à l'itérateur début
 	for(debut ; debut!=fin; debut++) // itération de parcours de la map pages
 	{
-		
+		bool estImage = e && EstImage(debut->first); // permet de gérer l'option -e
 
-		bool estImage = false; // permet de gérer l'option -e
-		if(e) // filtre en fonction des extensions
+		if (!(e && EstImage(debut->first)))
 		{
-			estImage = EstImage(debut->first);
-		} 
-
-		if (!estImage) // création du noeud ,si la cible est pas une image -e 
-		{   
-			if (creeNoeud(debut->first, valeurNoeud))
+			if (h != -1) // filtre en fonction de l'heure
 			{
-				valeurNoeudCible = valeurNoeud;
-				valeurNoeud++;
-			}
-			else 
+				creeGrapheHeure(debut, h, e);
+
+			} // on a fini de filtrer en fonction de l'heure !!!!!!!! 
+			else if (h == -1) // si on veut pas de filtre sur les heures !!!!!!!!
 			{
-				valeurNoeudCible = noeuds.find(debut->first)->second;
-
-			}
-		} // fin de la création
-
-		if(h!=-1 && !estImage) // filtre en fonction de l'heure
-		{
-			creeGrapheHeure(debut, h, valeurNoeudCible, e);
-
-		} // on a fini de filtrer en fonction de l'heure !!!!!!!! 
-		else if (h == -1 && !estImage) // si on veut pas de filtre sur les heures !!!!!!!!
-		{
-			for (size_t heure = 0; heure < 24; heure++) // on le fait pour chaques heures !!! 
-			{
-				creeGrapheHeure(debut, heure, valeurNoeudCible, e);
-
+				for (size_t heure = 0; heure < 24; heure++) // on le fait pour chaques heures !!! 
+				{
+					creeGrapheHeure(debut, heure, e);
+				}
 			}
 		}
+
 	}
 
 } //----- Fin de Graphe
@@ -167,14 +150,17 @@ Graphe::~Graphe ( )
 #endif
 } //----- Fin de ~Graphe
 
-void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & Cible, const size_t & heure, int &valeurNoeudCible, bool e)
+void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & cible, const size_t & heure, bool e)
 {
+	bool noeudCree = false; // savoir si on a crée un noeud pour la cible ou pas encore
+							// permettra de créer le noeud uniquement si il interagit avec une autre page
+	int valeurNoeudCible; // garder en mémoire la valeur du noeud si il est crée
 	// déclaration des itérateurs de parcours 
 	map<string, list<Log> > ::const_iterator typeReqDeb, typeReqFin;
-	if (!Cible->second.lesLogs[heure].empty())// si la liste est non vide
+	if (!cible->second.lesLogs[heure].empty())// si la liste est non vide
 	{
-		typeReqDeb = Cible->second.lesLogs[heure].begin();
-		typeReqFin = Cible->second.lesLogs[heure].end();
+		typeReqDeb = cible->second.lesLogs[heure].begin();
+		typeReqFin = cible->second.lesLogs[heure].end();
 
 
 		while (typeReqDeb != typeReqFin && typeReqDeb->first != "GET")// isolation des hits
@@ -188,11 +174,23 @@ void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & Cible, const s
 			list<Log> ::const_iterator cur = typeReqDeb->second.begin(); // itérateur de parcours des logs
 			while (cur != typeReqDeb->second.end()) // parcours des logs
 			{
-				// on vérifie si c'est une image ou non
+				// on vérifie si c'est pas une image 
 				if (!e || (e && !EstImage(cur->referer)))
 				{
-					// si le noeud n'existe pas ! 
-					if (creeNoeud(cur->referer, valeurNoeud)) // si le noeud n'est pas déjà présent
+					if (!noeudCree) // si on a pas encore eu besoin de créer le noeud de la cible
+					{
+						if (creeNoeud(cible->first, valeurNoeud)) // si le noeud est doit etre crée
+						{
+							valeurNoeudCible = valeurNoeud;
+							valeurNoeud++;
+						}
+						else // si il était déjà présent
+						{
+							valeurNoeudCible = noeuds.find(cible->first)->second;
+
+						}
+					}
+					if (creeNoeud(cur->referer, valeurNoeud)) // si le noeud du referer n'est pas déjà présent
 					{
 						valeurNoeud++;
 					}
