@@ -2,61 +2,48 @@
 #include <iostream>
 using namespace std;
 
-static bool e = false; 
-static int h = -1;
+static bool e = false, g = false; 
+static int t = -1;
+static string ficGraphe;
 const char *EOPT = "-e";
 const char *TOPT = "-t";
 const char *GOPT = "-g";
+const string EXTLOG = ".log";
 
 int main(int argc, char* argv[])
 {
-	/*traitement des options d'appel du programme*/
-	if (argc == 2)	//option e ou option invalide
+	/*traitement des options*/
+	for (int i = 1; i < argc; i++)
 	{
-		cout << argv[1] << endl; 
-		if (strcmp(argv[1], EOPT)==0)	//on vérifie que c'est bien l'option e
+		if (strcmp(argv[i], EOPT) == 0)	//test si c'est l'option e
 		{
 			e = true;
 		}
-	}	//sinon, on ignore l'option
-	else if (argc == 3)		//option h ou option invalide
-	{
-		if (strcmp(argv[1], TOPT) == 0)
+		else if (i + 1 < argc && strcmp(argv[i], TOPT) == 0)	//test si option t et argument suivant
 		{
-			if (atoi(argv[2]) >= 0 && atoi(argv[2]) < 24)
+			if (atoi(argv[i+1]) >= 0 && atoi(argv[i+1]) < 24)
 			{
-				h = atoi(argv[2]);
+				t = atoi(argv[i+1]);
+			}
+		}
+		else if (i + 1 < argc && strcmp(argv[i], GOPT) == 0)	//test si option g et argument suivant
+		{
+			ficGraphe = string(argv[i + 1]);
+			if (ficGraphe.find(EXTLOG) != string::npos)
+			{
+				g = true;
 			}
 		}
 	}
-	else if (argc == 4)		// e puis h, ou h puis e, ou options (partiellement) invalides
-	{
-		if (strcmp(argv[1], EOPT) == 0)
-		{
-			e = true;
-			if (strcmp(argv[2], TOPT) == 0)
-			{
-				if (atoi(argv[3]) >= 0 && atoi(argv[3]) < 24)
-				{
-					h = atoi(argv[3]);
-				}
-			}
-		}
-		else if (strcmp(argv[1], TOPT) == 0)
-		{
-			if (atoi(argv[2]) >= 0 && atoi(argv[2]) < 24)
-			{
-				h = atoi(argv[2]);
-				if (strcmp(argv[3], EOPT) == 0)
-				{
-					e = true;
-				}
-			}
-		}
-	}
-	//fin traitement options
 
-
+#ifdef MAP
+	cout << "e = " << e << endl;
+	cout << "t = " << t << endl;
+	cout << "g = " << g << endl;
+	cout << "nom graphe = " << ficGraphe << endl;
+	string virsolvy;
+	cin >> virsolvy;
+#endif
 
 	return 0;
 
