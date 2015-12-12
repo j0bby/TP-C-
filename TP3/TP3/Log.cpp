@@ -252,6 +252,7 @@ Log::Log(const string &log)
 	  cout << "date"<<date << endl;
 	  cout << "statut"<<statut << endl;
 	  cout << "taille"<<taille << endl;
+	  cout << "URL" << url << endl;
 	  cout << "referer"<<referer << endl;
 	  cout <<"nvigateur"<< navigateur << endl;
 //#endif*/
