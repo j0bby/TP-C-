@@ -1,17 +1,40 @@
 #include <string>
 #include <iostream>
+#include "Collection.h"
+#include "Graphe.h"
 using namespace std;
 
 static bool e = false, g = false; 
 static int t = -1;
-static string ficGraphe;
+static string ficGraphe, ficLogs;
 const char *EOPT = "-e";
 const char *TOPT = "-t";
 const char *GOPT = "-g";
 const string EXTLOG = ".log";
+const string EXTDOT = ".dot";
 
 int main(int argc, char* argv[])
 {
+	/*verification du nom de fichier de logs*/
+	if (argc > 1)
+	{
+		ficLogs = string(argv[argc-1]);
+		if (ficLogs.find(EXTLOG) != string::npos)
+		{
+			//on est bon
+		}
+		else
+		{
+			cerr << "Nom du fichier de logs manquant ou extension invalide" << endl;
+		}
+	}
+	else
+	{
+		cerr << "Nom du fichier de logs manquant" << endl;
+	}
+
+
+
 	/*traitement des options*/
 	for (int i = 1; i < argc; i++)
 	{
@@ -29,7 +52,7 @@ int main(int argc, char* argv[])
 		else if (i + 1 < argc && strcmp(argv[i], GOPT) == 0)	//test si option g et argument suivant
 		{
 			ficGraphe = string(argv[i + 1]);
-			if (ficGraphe.find(EXTLOG) != string::npos)
+			if (ficGraphe.find(EXTDOT) != string::npos)
 			{
 				g = true;
 			}
@@ -44,6 +67,19 @@ int main(int argc, char* argv[])
 	string virsolvy;
 	cin >> virsolvy;
 #endif
+
+	/*execution des traitements demandés*/
+	Collection collection(ficLogs);
+	if (g)
+	{
+		Graphe graphe(collection, e, t);
+		graphe.GenereFichier(ficGraphe);
+	}
+	else
+	{
+		collection.Top10(e, t);
+	}
+
 
 	return 0;
 
