@@ -48,14 +48,14 @@ Log::Log ( const Log & unLog )
 #ifdef MAP
 cout << "Appel au constructeur de copie de <Log>" << endl;
 #endif
-ip = unLog.ip;
-logname = unLog.logname;	
-user = unLog.user;		
-date = unLog.date;		
-statut = unLog.statut;		
-taille = unLog.taille;	
-referer = unLog.referer;	
-navigateur = unLog.navigateur; 
+	ip = unLog.ip;
+	logname = unLog.logname;	
+	user = unLog.user;		
+	date = unLog.date;		
+	statut = unLog.statut;		
+	taille = unLog.taille;	
+	referer = unLog.referer;	
+	navigateur = unLog.navigateur; 
 } //----- Fin de Log (constructeur de copie)
 
 
@@ -78,7 +78,7 @@ Log::Log(const string &log)
 		posDebut = 0; 
 		posFin = 0;
 
-		// récupération de l'ip
+		/*récupération de l'ip*/
 		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
 			ip = log.substr(posDebut, posFin);
@@ -90,7 +90,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération user
+		/*récupération user*/
 		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
 			user = log.substr(posDebut,posFin-posDebut);
@@ -102,7 +102,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération logname
+		/*récupération logname*/
 		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
 			logname = log.substr(posDebut, posFin - posDebut);
@@ -114,7 +114,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		//récupération date
+		/*récupération date*/
 		if ((posFin = log.find(SEP_DATE_FIN,posDebut)) != log.npos)// SEP_DATE_FIN trouvé
 		{
 			date = log.substr(posDebut, posFin - posDebut);
@@ -127,7 +127,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération statut
+		/*récupération statut*/
 		if ((posFin = log.find(SEP, posDebut)) != log.npos)		// SEP trouvé
 		{
 			statut = log.substr(posDebut, posFin - posDebut);
@@ -140,7 +140,7 @@ Log::Log(const string &log)
 		}
 
 
-		// on enleve la partie requete
+		/*on enleve la partie requete*/
 		if ((posFin = log.find(SEP_REQ,posDebut)) != log.npos)	// SEP_REQ trouvé
 		{
 			posDebut = posFin + 2; //on supprime la partie concernant la requete
@@ -151,7 +151,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// on enleve la partie retour retour 
+		/*on enleve la partie retour */
 		if ((posFin = log.find(SEP, posDebut)) != log.npos)	// SEP_REQ trouvé
 		{
 			posDebut = posFin + 1; 
@@ -161,7 +161,7 @@ Log::Log(const string &log)
 			cerr << "[LOG] erreur dans <requête> : " << log << endl;
 			return;
 		}
-		// récupération taille
+		/*récupération taille*/
 		if ((posFin = log.find(SEP,posDebut)) != log.npos)		// SEP trouvé
 		{
 			taille = log.substr(posDebut, posFin - posDebut);
@@ -173,7 +173,7 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// récupération url
+		/*récupération url*/
 		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
 		{
 			url = log.substr(posDebut, posFin - posDebut);
@@ -185,32 +185,6 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// recupération de réferer 
-		/*for (int i = 0; i < 3; i++) // on accede à l'adresse de la page (on enlève HTPP://...../)
-		{
-			if ((posFin = log.find(SEP_URL, posDebut)) != log.npos)	//SEP_REQ trouvé
-			{
-				posDebut = posFin + (i!=2);
-			}
-			else										// SEP_REQ non trouvé
-			{
-				cerr << "[LOG] erreur dans <referer> : " << log << endl;
-				return;
-			}
-		}
-		if ((posFin = log.find(SEP_REQ, posDebut)) != log.npos)	//SEP_REQ trouvé
-		{
-			referer = log.substr(posDebut, posFin - posDebut);
-			referer = referer.substr(0, referer.find(';')); //enlever tout ce qui est apres un ;
-			referer = referer.substr(0, referer.find('?')); //enlever tout ce qui est après un ?
-			posDebut = posFin + 3;
-		}
-		else										// SEP_REQ non trouvé
-		{
-			cerr << "[LOG] erreur dans <referer> : " << log << endl;
-			return;
-		}
-		*/
 		if (url.rfind(SEP_URL) != string::npos)
 		{
 			referer = url.substr(url.rfind(SEP_URL), distance(url.begin(), url.end() - url.rfind(SEP_URL)));
@@ -221,7 +195,7 @@ Log::Log(const string &log)
 		{
 			referer = url;
 		}
-		// récupération navigateur
+		/* récupération navigateur*/
 		posDebut = log.find(SEP_REQ, posFin) + 1;
 		posDebut = log.find(SEP_REQ, posDebut) + 1;
 		if ((posFin = log.find(SEP_REQ, posDebut)) != string::npos)	// SEP trouvé
@@ -235,7 +209,6 @@ Log::Log(const string &log)
 			return;
 		}
 
-		// tous les attributs sont initialisés
 
 		if (posDebut!=log.size())	// il n'y a pas plus d'infos dans le log.
 		{

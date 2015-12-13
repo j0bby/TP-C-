@@ -1,11 +1,11 @@
 /*************************************************************************
                            Graphe  -  description
                              -------------------
-    début                : 23/11/2015
+    debut                : 23/11/2015
     copyright            : (C) 2015 par mfallouh_mvirsolvy
 *************************************************************************/
 
-//---------- Réalisation de la classe <Graphe> (fichier Graphe.cpp) --
+//---------- Realisation de la classe <Graphe> (fichier Graphe.cpp) --
 
 //---------------------------------------------------------------- INCLUDE
 
@@ -21,17 +21,18 @@ using namespace std;
 
 extern const string EXCLUSIE[];
 extern const int NB_FORMAT;
+extern const char SEP_PT;
 //---------------------------------------------------- Variables de classe
 
-//----------------------------------------------------------- Types privés
+//----------------------------------------------------------- Types prives
 
 
 //----------------------------------------------------------------- PUBLIC
 //-------------------------------------------------------- Fonctions amies
 
-//----------------------------------------------------- Méthodes publiques
+//----------------------------------------------------- Methodes publiques
 
-//------------------------------------------------- Surcharge d'opérateurs
+//------------------------------------------------- Surcharge d'operateurs
 
 /*
 Graphe & Graphe::operator = ( const Graphe & unGraphe )
@@ -55,88 +56,93 @@ Graphe::Graphe ( const Graphe & unGraphe )
 */
 
 bool Graphe::EstImage(const string & adresse)
+// Algorithme :
+//
 {
-	size_t posExtension = adresse.find_last_of('.'); // position à partir de laquelle commence l'extension
+	size_t posExtension = adresse.find_last_of(SEP_PT); // position à partir de laquelle commence l'extension
 	string Extension = adresse.substr(posExtension + 1,adresse.npos); // l'extension
-	bool image = false;
+	bool image = false; // s'il s'agit d'une image
 	int i = 0;
 	while( i < NB_FORMAT && !image ) // parcours les extensions images.
 	{
 		image = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
 		i++;
-	}
+	} // fin du parcours
 	return image;
-}
+} // ------ Fin de estImage
 
 void Graphe::GenereFichier(const string & nomFichier)
+// Algorithme : 
+// Parcours la map des noeuds en les affichant tous, selon la synthaxe,
+// de même pour les liens.
 {
 	ofstream grapheFile(nomFichier.c_str());
 	if (grapheFile) // le fichier est correct
 	{
-		// génération des noeuds 
 		grapheFile << "digraph {" << endl;
+
+		/*generation des noeuds */
 		map<string, int > ::const_iterator noeudsDebut, noeudsFin;
 		noeudsDebut = noeuds.begin();
 		noeudsFin = noeuds.end();
-		for (noeudsDebut; noeudsDebut != noeudsFin; noeudsDebut++)
+		for (noeudsDebut; noeudsDebut != noeudsFin; noeudsDebut++) // parcours de noeuds
 		{
 			grapheFile << "node" << noeudsDebut->second << " [" << noeudsDebut->first << "];" << endl;
 		}
-		// génération des liens 
+
+		/*generation des liens */ 
 		map<paire, int > ::const_iterator liensDebut, liensFin;
 		liensDebut = liens.begin();
 		liensFin = liens.end();
-		for (liensDebut; liensDebut != liensFin; liensDebut++)
+		for (liensDebut; liensDebut != liensFin; liensDebut++) // parcours de liens
 		{
 			grapheFile << "node" << liensDebut->first.NumReferer << " -> node" << liensDebut->first.NumCible << " [label=\"" << liensDebut->second << "\"];" << endl;
 		}
 
 		grapheFile << "}" << endl;
-	}
+	} // fin de fichier correct
 	else
 	{
 		cerr << "[Generation Graphe] Pb sur le fichier" << endl;
 	}
 
 	
-}
+} // ----- Fin de GenereFichier
 
-Graphe::Graphe ( const Collection &aCol, const bool e , const int h   ) : 
+Graphe::Graphe ( const Collection &aCol, const bool e , const int t   ) : 
 	valeurNoeud(0)
 // Algorithme :
 // parcours la collection dans son ensemble, 
-// si option, compare l'extension avec celles connues pour une image et passe à vraie la variable estImage
-// puis établis des liens entre referer et cible (mits dans noeuds) que cré des liens, ou implémente leur valeur pour chaque logs.
-// si option h, alors celà est fait que pour l'heure précisée
+// verifie que la cible est en accord avec l'option e, puis l'insere dans la graphe en fonction
+// avec la methode genere graphe
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Graphe>" << endl;
 #endif
-	map<string , Cible > :: const_iterator debut,fin; // les itérateurs de parcours de la collection
+	map<string , Cible > :: const_iterator debut,fin; // les iterateurs de parcours de la collection
 	debut=aCol.pages.begin();
 	fin=aCol.pages.end();
-	int valeurNoeudCible = 0; // la valeur de la cible, donc associé à l'itérateur début
-	for(debut ; debut!=fin; debut++) // itération de parcours de la map pages
+
+	for(debut ; debut!=fin; debut++) // iteration de parcours de la map pages
 	{
-		bool estImage = e && EstImage(debut->first); // permet de gérer l'option -e
+		bool estImage = e && EstImage(debut->first); // permet de gerer l'option -e
 
-		if (!(e && EstImage(debut->first)))
+		if (!(e && EstImage(debut->first))) // si la cible peut être ajoutee dans le graphe
 		{
-			if (h != -1) // filtre en fonction de l'heure
+			if (t != -1) // filtre en fonction de l'heure
 			{
-				creeGrapheHeure(debut, h, e);
-
-			} // on a fini de filtrer en fonction de l'heure !!!!!!!! 
-			else if (h == -1) // si on veut pas de filtre sur les heures !!!!!!!!
+				creeGrapheHeure(debut, t, e);
+			} 
+			else if (t == -1)
 			{
 				for (size_t heure = 0; heure < 24; heure++) // on le fait pour chaques heures !!! 
 				{
 					creeGrapheHeure(debut, heure, e);
 				}
-			}
-		}
+			}// fin du else if
+		} // fin de la creation de la cible dans le graphe
 
-	}
+	} // fin du parcours de la Collection
 
 } //----- Fin de Graphe
 
@@ -151,11 +157,18 @@ Graphe::~Graphe ( )
 } //----- Fin de ~Graphe
 
 void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & cible, const size_t & heure, bool e)
+// Algorithme : 
+// parcours la cible, pour seleectionner les GET.
+// parcours ensuite les logs, et met à jour noeuds et liens en fonction du referer du log, et des options.
+// si le referer est en accords avec les options alors il cree dans noeuds si besoin, puis le liens entre 
+// la cible et le referer est cree ou incremente.
 {
-	bool noeudCree = false; // savoir si on a crée un noeud pour la cible ou pas encore
-							// permettra de créer le noeud uniquement si il interagit avec une autre page
-	int valeurNoeudCible; // garder en mémoire la valeur du noeud si il est crée
-	// déclaration des itérateurs de parcours 
+	bool noeudCree = false; // savoir si on a cree un noeud pour la cible ou pas encore
+							// permettra de creer le noeud uniquement si il interagit avec une autre page
+
+	int valeurNoeudCible;	// garder en memoire la valeur du noeud cible
+
+	// declaration des iterateurs de parcours de la cible
 	map<string, list<Log> > ::const_iterator typeReqDeb, typeReqFin;
 	if (!cible->second.lesLogs[heure].empty())// si la liste est non vide
 	{
@@ -168,34 +181,37 @@ void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & cible, const s
 			typeReqDeb++;
 		}
 
-		if (typeReqDeb != typeReqFin && typeReqDeb->first == "GET") // si la page a bien été hit au moins une fois.
+		if (typeReqDeb != typeReqFin && typeReqDeb->first == "GET") // si la page a bien ete hit au moins une fois.
 		{
 
-			list<Log> ::const_iterator cur = typeReqDeb->second.begin(); // itérateur de parcours des logs
-			while (cur != typeReqDeb->second.end()) // parcours des logs
+			list<Log> ::const_iterator cur = typeReqDeb->second.begin(); // iterateur de parcours des logs
+
+			/*parcours des logs*/
+			while (cur != typeReqDeb->second.end())
 			{
-				// on vérifie si c'est pas une image 
-				if (!e || (e && !EstImage(cur->referer)))
+				
+				if (!e || (e && !EstImage(cur->referer))) // si l'extension est OK
 				{
-					if (!noeudCree) // si on a pas encore eu besoin de créer le noeud de la cible
+					if (!noeudCree) // si on a pas encore eu besoin de creer le noeud de la cible
 					{
-						if (creeNoeud(cible->first, valeurNoeud)) // si le noeud est doit etre crée
+						if (creeNoeud(cible->first, valeurNoeud)) // si le noeud doit etre cree
 						{
 							valeurNoeudCible = valeurNoeud;
 							valeurNoeud++;
 						}
-						else // si il était déjà présent
+						else // si il etait dejà present
 						{
 							valeurNoeudCible = noeuds.find(cible->first)->second;
-
 						}
-					}
-					if (creeNoeud(cur->referer, valeurNoeud)) // si le noeud du referer n'est pas déjà présent
+					} // fin du !noeudCree
+
+					/*Mise a jour des noeuds*/
+					if (creeNoeud(cur->referer, valeurNoeud)) // si le noeud du referer n'est pas dejà present
 					{
 						valeurNoeud++;
 					}
 
-					// si la paire n'existe pas
+					/*Mise à jour des liens*/
 					paire paireInserer = { noeuds.find(cur->referer)->second , valeurNoeudCible };
 					pair<paire, int> insertion = { paireInserer, 1 };
 					pair<map<paire,int >::iterator, bool> bInsertion;
@@ -204,24 +220,27 @@ void Graphe::creeGrapheHeure(map<string, Cible>::const_iterator & cible, const s
 					{
 						liens.find(paireInserer)->second++;
 					}
-				}
-				cur++; // on change de log !!!
+				} // fin de extension OK
+
+				cur++; 
 			}
-		}
-	}
-}
+		} // fin du si page hit
+	} // fin du si liste non vide
+} // ------ Fin de creeGrapheHeure
 
 bool Graphe::creeNoeud(const string & page, const int & valeurNoeud)
+// Algorithme :
+// 
 {
 	pair<string, int> aInserer = { page, valeurNoeud }; // le noeud
 	pair<map<string, int >::iterator, bool> retInsertion;
 	retInsertion = noeuds.insert(aInserer);
 	return retInsertion.second;
-}
+} // ------ Fin de creeNoeud
 
 
 //------------------------------------------------------------------ PRIVE
 
-//----------------------------------------------------- Méthodes protégées
+//----------------------------------------------------- Methodes protegees
 
-//------------------------------------------------------- Méthodes privées
+//------------------------------------------------------- Methodes privees

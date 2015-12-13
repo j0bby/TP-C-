@@ -20,16 +20,16 @@ static void testConstructCollection();
 static void testTop10Collection();
 static void testTop10CollectionVide();
 static void testTop10CollectionE();
-static void testTop10CollectionH();
-static void testTop10CollectionEH();
+static void testTop10CollectionT();
+static void testTop10CollectionET();
 static void testTop10CollectionEgalite();
 static void testTop10CollectionMoins10();
 
 static void testGraphe();
 static void testGrapheConstruct();
 static void testGrapheConstructE();
-static void testGrapheConstructH();
-static void testGrapheConstructEH();
+static void testGrapheConstructT();
+static void testGrapheConstructET();
 static void testGrapheGenereFichier();
 
 

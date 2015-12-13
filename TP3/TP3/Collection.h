@@ -32,7 +32,7 @@ class Collection
 public:
 	//----------------------------------------------------- Méthodes publiques
 	
-	void Top10(const bool e = false, const int h = -1);
+	void Top10(const bool e = false, const int t = -1);
 	// Mode d'emploi :
 	// Affiche dans la console les 10 documents les plus consultés.
 	// Si jamais il y des égalités qui ne sortiraient pas si l’on n’affichait

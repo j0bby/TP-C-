@@ -18,9 +18,18 @@ using namespace std;
 
 //------------------------------------------------------------------ Types 
 typedef struct paire {
+	// structure associant une cilbe et un referer par le numéro de noeud leur correspondant
+
 	int NumReferer;
 	int NumCible;
+
 	bool const& operator<(const paire & unePaire) const
+	// surchage de l'operteur de comparaison pour permettre l'utilisation en tant que clée dans la map
+	// 
+	// Mode d'emploi :
+	// compare d'abord les numReferer entre eux, en cas d'égalité, compare les numCible
+	// Contrat :
+	//
 	{
 		if (this->NumReferer != unePaire.NumReferer)
 		{
@@ -55,14 +64,13 @@ public:
 	// Mode d'emploi :
 	// écrit dans(ou crée) le fichier de nom « nomFichier » les instructions
 	// de création de graphe, au format spécifié dans l’énoncé.
-	// Si le graphe est vide, crée un fichier vide.
 	//
 	// Contrat :
 	//
 
 
 	//------------------------------------------------- Surcharge d'opérateurs
-	Graphe & operator = (const Graphe & unGraphe);
+	Graphe & operator = (const Graphe & unGraphe); // déclaré mais non défini pour empêcher son utilisation
 	// Mode d'emploi :
 	//
 	// Contrat :
@@ -70,16 +78,16 @@ public:
 
 
 	//-------------------------------------------- Constructeurs - destructeur
-	Graphe(const Graphe & unGraphe);
+	Graphe(const Graphe & unGraphe); // déclaré mais non défini pour empêcher son utilisation
 	// Mode d'emploi (constructeur de copie) :
 	//
 	// Contrat :
 	//
 
-	Graphe(const Collection &aCol, const bool e = false, const int h = -1);
+	Graphe(const Collection &aCol, const bool e = false, const int t = -1);
 	// Mode d'emploi :
 	// parcourt la Collection entrée en paramètre afin de remplir les dictionnaires.
-	// Prend compte des options e et h.
+	// Prend en compte des options e et t.
 	// Contrat :
 	//
 
@@ -106,7 +114,7 @@ protected:
 	map<paire, int> liens;		//dictionnaire de liens, associant à chaque paire(structure :
 								//referer et cible, identifiés par leurs numéros de noeud) son nombre de hits.
 
-	int valeurNoeud; // la valeur du prochain noeud ajouté dans la la map noeud
+	int valeurNoeud;			// la valeur du prochain noeud ajouté dans la la map noeud
 private:
 	//------------------------------------------------------- Attributs privés
 
