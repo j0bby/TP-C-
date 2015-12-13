@@ -53,7 +53,7 @@ public:
 	// Tient compte des options e et t pour filtrer les résultats.
 	//
 	// Contrat :
-	//
+	// 0<=t<24
 
 //------------------------------------------------- Surcharge d'opérateurs
     Cible & operator = ( const Cible & unCible ); // déclaré mais non défini pour empécher son utilisation

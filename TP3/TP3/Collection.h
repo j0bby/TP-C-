@@ -42,7 +42,7 @@ public:
 	// Prend en compte les options e et t pour filtrer l’affichage.
 	//
 	// Contrat :
-	//
+	// 0<=t<24
 
 	//------------------------------------------------- Surcharge d'opérateurs
 	Collection & operator = (const Collection & unCollection);

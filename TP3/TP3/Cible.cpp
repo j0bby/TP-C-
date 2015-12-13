@@ -31,10 +31,11 @@ extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE;
 
 int Cible::Ajouter(const string & log)
 // Algorithme :
-//
+// Extrait le type de requête, ainsi que l'heure d'émission de la requête
+// Après calcul de l'heure de Greenwich, insère le log à la bonne heure
 {
 	
-	Log nouveauLog = Log(log);				//			!!!VERIFIER SI CA MARCHE AVEC ALLOCATION STATIQUE !!!
+	Log nouveauLog = Log(log);				//	log à ajouter
 	string requete;		// nom de la requête (GET, POST..)
 	string date;		// informations de date
 	int heureLocale;	//heure locale
@@ -51,6 +52,8 @@ int Cible::Ajouter(const string & log)
 		cerr << "erreur de parsing de l'adresse cible : requete" << endl;	//ERREUR
 		return 1;
 	}
+
+	/*recherche de la date dans le log*/
 	debut = log.find(SEP_DATE_DEBUT) +1;
 	fin = log.find(SEP_DATE_FIN);
 	if (debut != fin)
@@ -62,6 +65,8 @@ int Cible::Ajouter(const string & log)
 		cerr << "erreur de parsing de l'adresse cible : date" << endl;	//ERREUR
 		return 1;
 	}
+
+	/*recherche de l'heure locale dans la date*/
 	debut = date.find(SEP_HEURE) +1;
 	fin = date.find(SEP_HEURE, debut);
 	if (debut != fin)
@@ -73,6 +78,8 @@ int Cible::Ajouter(const string & log)
 		cerr << "erreur de parsing de l'adresse cible : heure locale" << endl;	//ERREUR
 		return 1;
 	}
+
+	/*recherche du décalage horaire dans la date*/
 	debut = date.find(SEP, fin) +1;
 	string::iterator itFin = date.end();
 	fin = distance(date.begin(), itFin);
@@ -80,7 +87,7 @@ int Cible::Ajouter(const string & log)
 	{
 		decalage = stoi(date.substr(debut, fin - debut)) / 100;
 		heureGreenwich = heureLocale - decalage;
-		if (heureGreenwich > 23)	//gestion des dépassements faite à la main car '%' tolère les valeurs négatives
+		if (heureGreenwich > 23)	//gestion des dépassements faite à la main car l'opérateur '%' tolère les valeurs négatives
 		{
 			heureGreenwich -= 24;
 		}
@@ -115,7 +122,7 @@ int Cible::Ajouter(const string & log)
 	}
 
 #ifdef MAP
-	cout << "Nouvelle requete trouvee: " << requete << ", ajout a la Cible" << endl;
+	cout << "Log correctement ajoute a la Cible" << endl;
 #endif
 
 	return 0;
@@ -123,7 +130,8 @@ int Cible::Ajouter(const string & log)
 
 int Cible::Compte(const string & requete,  const int t) const
 // Algorithme :
-//
+// Compte le nombre de hits en utilisant la taille de la liste de logs
+// Tri par requete, filtrage de l'heure si spécifié en paramètre
 {
 	int compte = 0;	//variable de retour
 	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
@@ -157,7 +165,7 @@ Cible & Cible::operator = ( const Cible & unCible )
 
 */
 //-------------------------------------------- Constructeurs - destructeur
-Cible::Cible(const Cible & unCible)
+/*Cible::Cible(const Cible & unCible)
 // Algorithme :
 //
 {
@@ -165,7 +173,7 @@ Cible::Cible(const Cible & unCible)
 	cout << "Appel au constructeur de copie de <Cible>" << endl;
 #endif
 } //----- Fin de Cible (constructeur de copie)
-
+*/
 
 Cible::Cible()
 // Algorithme :
