@@ -1,0 +1,31 @@
+digraph {
+node15 [-];
+node3 [/4IF15.html];
+node1 [/search];
+node0 [/temps/];
+node2 [/temps/4IF1.html];
+node4 [/temps/4IF10.html];
+node5 [/temps/4IF11.js];
+node6 [/temps/4IF2.html];
+node7 [/temps/4IF3.html];
+node8 [/temps/4IF4.html];
+node9 [/temps/4IF5.jpg];
+node10 [/temps/4IF6.html];
+node11 [/temps/4IF7.html];
+node12 [/temps/4IF8.gif];
+node13 [/temps/4IF9.html];
+node14 [/temps/InsaIF.ico];
+node1 -> node0 [label="1"];
+node3 -> node2 [label="4"];
+node3 -> node4 [label="2"];
+node3 -> node5 [label="1"];
+node3 -> node6 [label="2"];
+node3 -> node7 [label="2"];
+node3 -> node8 [label="2"];
+node3 -> node9 [label="2"];
+node3 -> node10 [label="2"];
+node3 -> node11 [label="2"];
+node3 -> node12 [label="2"];
+node3 -> node13 [label="2"];
+node15 -> node14 [label="3"];
+}
