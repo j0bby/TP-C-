@@ -17,7 +17,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
 //------------------------------------------------------------- Constantes
-extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT, SEP_PVIRG;
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT, SEP_PVIRG; // les séparateurs
 extern const string EXCLUSIE[];
 extern const int NB_FORMAT;
 const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
@@ -31,7 +31,7 @@ const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des
 
 //----------------------------------------------------- Méthodes publiques
 
-void Collection::Top10(const bool e, const int h)
+void Collection::Top10(const bool e, const int t)
 // Algorithme
 //
 {
@@ -59,7 +59,7 @@ void Collection::Top10(const bool e, const int h)
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
 				if (find(EXCLUSIE, EXCLUSIE + NB_FORMAT, extensionFic) == EXCLUSIE + NB_FORMAT)		//extension n'est pas dans la liste des extensions à exclure
 				{
-					cpt = it1.second.Compte("GET", h);
+					cpt = it1.second.Compte("GET", t);
 					if (cpt > max)
 					{
 						dejaDansTop = false;
@@ -110,7 +110,7 @@ void Collection::Top10(const bool e, const int h)
 			max = 0;
 			for (auto const &it1 : pages)	//parcours du dictionnaire de Cible
 			{
-				cpt = it1.second.Compte("GET", h);
+				cpt = it1.second.Compte("GET", t);
 				if (cpt > max)
 				{
 					dejaDansTop = false;

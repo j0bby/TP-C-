@@ -121,14 +121,14 @@ int Cible::Ajouter(const string & log)
 	return 0;
 }	//fin de Ajouter
 
-int Cible::Compte(const string & requete,  const int h) const
+int Cible::Compte(const string & requete,  const int t) const
 // Algorithme :
 //
 {
 	int compte = 0;	//variable de retour
 	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
 
-	if (h == -1)	//pas d'option h
+	if (t == -1)	//pas d'option h
 	{
 		for (int heure = 0; heure < 24; heure++)
 		{
@@ -140,9 +140,9 @@ int Cible::Compte(const string & requete,  const int h) const
 	}
 	else	//option h spécifiée
 	{
-		if (lesLogs[h].find(requete) != lesLogs[h].end())	//si la requete est présente dans le dictionnaire
+		if (lesLogs[t].find(requete) != lesLogs[t].end())	//si la requete est présente dans le dictionnaire
 		{
-			compte += lesLogs[h].find(requete)->second.size();
+			compte += lesLogs[t].find(requete)->second.size();
 		}
 	}
 	return compte;

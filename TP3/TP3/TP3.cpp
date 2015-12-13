@@ -4,49 +4,44 @@
 #include "Graphe.h"
 using namespace std;
 
-static bool e = false, g = false; 
-static int t = -1;
-static string ficGraphe, ficLogs;
-const char *EOPT = "-e";
-const char *TOPT = "-t";
-const char *GOPT = "-g";
-const string EXTLOG = ".log";
-const string EXTDOT = ".dot";
+static bool e = false, g = false;	// variables permettant de traiter les options
+static int t = -1;					//
+
+static string ficGraphe, ficLogs;	// nom des fichiers
+
+const char *EOPT = "-e";			// les options 
+const char *TOPT = "-t";			//
+const char *GOPT = "-g";			//
+
+const string EXTLOG = ".log";		// extension des fichiers
+const string EXTDOT = ".dot";		//
 
 int main(int argc, char* argv[])
 {
 	/*verification du nom de fichier de logs*/
-	if (argc > 1)
+	if (argc > 1) // si nom de fichiers sont spécifié
 	{
 		ficLogs = string(argv[argc-1]);
-		if (ficLogs.find(EXTLOG) != string::npos)
+		if (ficLogs.find(EXTLOG) != string::npos) // le dernier paramtre est un fichier de log
 		{
 			//on est bon
 		}
 		else
 		{
 			cerr << "Nom du fichier de logs manquant ou extension invalide" << endl;
-#ifdef MAP
-			string virsolvy;
-			cin >> virsolvy;
-#endif
 			return 1;
 		}
-	}
+	} // fin du si fichiers
 	else
 	{
 		cerr << "Nom du fichier de logs manquant" << endl;
-#ifdef MAP
-		string virsolvy;
-		cin >> virsolvy;
-#endif
 		return 1;
 	}
 
 
 
 	/*traitement des options*/
-	for (int i = 1; i < argc; i++)
+	for (int i = 1; i < argc; i++) // parcours des arguments
 	{
 		if (strcmp(argv[i], EOPT) == 0)	//test si c'est l'option e
 		{
@@ -58,7 +53,7 @@ int main(int argc, char* argv[])
 			{
 				t = atoi(argv[i+1]);
 			}
-		}
+		} // fin de l'option t
 		else if (i + 1 < argc && strcmp(argv[i], GOPT) == 0)	//test si option g et argument suivant
 		{
 			ficGraphe = string(argv[i + 1]);
@@ -66,21 +61,19 @@ int main(int argc, char* argv[])
 			{
 				g = true;
 			}
-		}
-	}
+		} // fin de l'option g
+	} // fin du parcours d'arguments
 
 #ifdef MAP
 	cout << "e = " << e << endl;
 	cout << "t = " << t << endl;
 	cout << "g = " << g << endl;
 	cout << "nom graphe = " << ficGraphe << endl;
-	string virsolvy;
-	cin >> virsolvy;
 #endif
 
 	/*execution des traitements demandés*/
 	Collection collection(ficLogs);
-	if (g)
+	if (g) // si option demande de graphe
 	{
 		Graphe graphe(collection, e, t);
 		graphe.GenereFichier(ficGraphe);

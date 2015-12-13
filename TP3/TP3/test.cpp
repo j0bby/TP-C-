@@ -20,16 +20,16 @@ static void testConstructCollection();
 static void testTop10Collection();
 static void testTop10CollectionVide();
 static void testTop10CollectionE();
-static void testTop10CollectionH();
-static void testTop10CollectionEH();
+static void testTop10CollectionT();
+static void testTop10CollectionET();
 static void testTop10CollectionEgalite();
 static void testTop10CollectionMoins10();
 
 static void testGraphe();
 static void testGrapheConstruct();
 static void testGrapheConstructE();
-static void testGrapheConstructH();
-static void testGrapheConstructEH();
+static void testGrapheConstructT();
+static void testGrapheConstructET();
 static void testGrapheGenereFichier();
 
 
@@ -125,8 +125,8 @@ static void testGraphe()
 	cout << "Test Graphe" << endl;
 	testGrapheConstruct();
 	testGrapheConstructE();
-	testGrapheConstructH();
-	testGrapheConstructEH();
+	testGrapheConstructT();
+	testGrapheConstructET();
 	testGrapheGenereFichier();
 }
 static void testGrapheConstruct()
@@ -143,14 +143,14 @@ static void testGrapheConstructE()
 	Graphe tGraphe(col, true);
 	tGraphe.GenereFichier("testE.txt");
 }
-static void testGrapheConstructH() 
+static void testGrapheConstructT() 
 {
 	cout << "Test du constructeur avec -h" << endl;
 	Collection col("test.in");
 	Graphe tGraphe(col, false, 11);
 	tGraphe.GenereFichier("testH.txt");
 }
-static void testGrapheConstructEH() 
+static void testGrapheConstructET() 
 {
 	cout << "Test du constructeur avec -e -h" << endl;
 	Collection col("test.in");
@@ -170,8 +170,8 @@ static void testCollection()
 	testTop10CollectionMoins10();
 	testTop10CollectionVide();
 	testTop10CollectionE();
-	testTop10CollectionH();
-	testTop10CollectionEH();
+	testTop10CollectionT();
+	testTop10CollectionET();
 	testTop10CollectionEgalite();
 }
 
@@ -205,13 +205,13 @@ static void testTop10CollectionE()	//test de l'option e pour Top10
 	tcollec.Top10(true);
 }
 
-static void testTop10CollectionH()	//test de l'option h pour Top10
+static void testTop10CollectionT()	//test de l'option h pour Top10
 {
 	cout << "test de Collection::Top10 -- Option -h:" << endl;
 	Collection tcollec(logsTestCollec);
 	tcollec.Top10(false, 9);
 }
-static void testTop10CollectionEH()		//test des options e et h combinees pour Top10
+static void testTop10CollectionET()		//test des options e et h combinees pour Top10
 {
 	cout << "test de Collection::Top10 -- Option -e -h:" << endl;
 	Collection tcollec(logsTestCollec);
