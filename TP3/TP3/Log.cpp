@@ -186,7 +186,7 @@ Log::Log(const string &log)
 		}
 
 		// recupération de réferer 
-		for (int i = 0; i < 3; i++) // on accede à l'adresse de la page (on enlève HTPP://...../)
+		/*for (int i = 0; i < 3; i++) // on accede à l'adresse de la page (on enlève HTPP://...../)
 		{
 			if ((posFin = log.find(SEP_URL, posDebut)) != log.npos)	//SEP_REQ trouvé
 			{
@@ -210,8 +210,21 @@ Log::Log(const string &log)
 			cerr << "[LOG] erreur dans <referer> : " << log << endl;
 			return;
 		}
+		*/
+		if (url.rfind(SEP_URL) != string::npos)
+		{
+			referer = url.substr(url.rfind(SEP_URL), distance(url.begin(), url.end() - url.rfind(SEP_URL)));
+			referer = referer.substr(0, referer.find(';')); //enlever tout ce qui est apres un ;
+			referer = referer.substr(0, referer.find('?')); //enlever tout ce qui est après un ?
+		}
+		else
+		{
+			referer = url;
+		}
 		// récupération navigateur
-		if ((posFin = log.find(SEP_REQ,posDebut)) != log.npos)	// SEP trouvé
+		posDebut = log.find(SEP_REQ, posFin) + 1;
+		posDebut = log.find(SEP_REQ, posDebut) + 1;
+		if ((posFin = log.find(SEP_REQ, posDebut)) != string::npos)	// SEP trouvé
 		{
 			navigateur = log.substr(posDebut, posFin - posDebut);
 			posDebut = posFin + 1; 

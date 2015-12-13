@@ -80,6 +80,14 @@ int Cible::Ajouter(const string & log)
 	{
 		decalage = stoi(date.substr(debut, fin - debut)) / 100;
 		heureGreenwich = heureLocale - decalage;
+		if (heureGreenwich > 23)	//gestion des dépassements faite à la main car '%' tolère les valeurs négatives
+		{
+			heureGreenwich -= 24;
+		}
+		else if (heureGreenwich < 0)
+		{
+			heureGreenwich += 24;
+		}
 	}
 	else
 	{

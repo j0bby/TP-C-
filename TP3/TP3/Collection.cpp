@@ -17,8 +17,9 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Collection.h"
 //------------------------------------------------------------- Constantes
-extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT;
+extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT, SEP_PVIRG;
 extern const string EXCLUSIE[];
+extern const int NB_FORMAT;
 const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
 //---------------------------------------------------- Variables de classe
 
@@ -56,7 +57,7 @@ void Collection::Top10(const bool e, const int h)
 				/*vérification du type de fichier*/
 				debut = it1.first.rfind(SEP_PT)+1;
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
-				if (find(EXCLUSIE, EXCLUSIE + 8, extensionFic) == EXCLUSIE + 8)		//extension n'est pas dans la liste des extensions à exclure
+				if (find(EXCLUSIE, EXCLUSIE + NB_FORMAT, extensionFic) == EXCLUSIE + NB_FORMAT)		//extension n'est pas dans la liste des extensions à exclure
 				{
 					cpt = it1.second.Compte("GET", h);
 					if (cpt > max)
@@ -198,8 +199,12 @@ Collection::Collection(const string & nomFichier)
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
-			adrCible = adrCible.substr(0, adrCible.find_last_of(SEP));
-			adrCible = adrCible.substr(0, adrCible.find_last_of(SEP_INT));
+			if (adrCible.rfind(SEP_URL) != string::npos)
+			{
+				adrCible = adrCible.substr(adrCible.rfind(SEP_URL), distance(adrCible.begin(), adrCible.end() - adrCible.rfind(SEP_URL)));
+				adrCible = adrCible.substr(0, adrCible.find(SEP_PVIRG)); //enlever tout ce qui est apres un ;
+				adrCible = adrCible.substr(0, adrCible.find(SEP_INT)); //enlever tout ce qui est après un ?
+			}
 
 			/* mise à jour du dictionnaire de Cible */
 			Cible cibleInser;

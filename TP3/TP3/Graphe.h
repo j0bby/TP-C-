@@ -24,11 +24,11 @@ typedef struct paire {
 	{
 		if (this->NumReferer != unePaire.NumReferer)
 		{
-			return this->NumReferer < unePaire.NumReferer;
+			return (this->NumReferer < unePaire.NumReferer);
 		}
 		else
 		{
-			return this->NumCible < unePaire.NumCible;
+			return (this->NumCible < unePaire.NumCible);
 		}
 	}
 };

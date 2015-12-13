@@ -15,8 +15,8 @@ copyright            : (C) 2015 par mfallouh_mvirsolvy
 #include "Cible.h"
 using namespace std;
 //------------------------------------------------------------- Constantes 
-const string EXCLUSIE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css" };	//extensions à exclure si option e spécifiée
-const int NB_FORMAT = 8;
+const string EXCLUSIE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css", (string)"ico" };	//extensions à exclure si option e spécifiée
+const int NB_FORMAT = 9;
 																																						//------------------------------------------------------------------ Types 
 
 //------------------------------------------------------------------------ 
