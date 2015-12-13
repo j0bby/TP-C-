@@ -16,7 +16,7 @@ copyright            : (C) 2015 par mfallouh_mvirsolvy
 using namespace std;
 //------------------------------------------------------------- Constantes 
 const string EXCLUSIE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css", (string)"ico" };	//extensions à exclure si option e spécifiée
-const int NB_FORMAT = 9;
+const int NB_EXTENSIONS = 9;	//nombre d'extensions bannies
 																																						//------------------------------------------------------------------ Types 
 
 //------------------------------------------------------------------------ 
@@ -32,14 +32,14 @@ class Collection
 public:
 	//----------------------------------------------------- Méthodes publiques
 	
-	void Top10(const bool e = false, const int t = -1);
+	void Top10(const bool e = false, const int t = -1) const;
 	// Mode d'emploi :
 	// Affiche dans la console les 10 documents les plus consultés.
 	// Si jamais il y des égalités qui ne sortiraient pas si l’on n’affichait
 	// que 10 résultats, on affiche exceptionnellement davantage de résultats.
 	// Si la collection comporte moins de 10 cibles, n’affiche que les 
 	// cibles présentes dans la collection.
-	// Prend en compte les options e et h pour filtrer l’affichage.
+	// Prend en compte les options e et t pour filtrer l’affichage.
 	//
 	// Contrat :
 	//

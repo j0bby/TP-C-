@@ -19,7 +19,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT, SEP_PVIRG; // les séparateurs
 extern const string EXCLUSIE[];
-extern const int NB_FORMAT;
+extern const int NB_EXTENSION;
 const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
 //---------------------------------------------------- Variables de classe
 
@@ -31,8 +31,11 @@ const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des
 
 //----------------------------------------------------- Méthodes publiques
 
-void Collection::Top10(const bool e, const int t)
-// Algorithme
+void Collection::Top10(const bool e, const int t) const
+// Algorithme : on remplit progressivement une liste avec les éléments les plus consultés
+// On vérifie pour chaque élément si il est déjà contenu dans cette liste et si le nombre de hits dépasse le max actuel
+// Pour gérer les collections de moins de 10 Cible, on vérifie si on a vidé la collection
+// Pour gérer les égalités, on mémorise la valeur de hits minimale du top
 //
 {
 	typedef pair<string, int> elementTop;	//pour les cibles du top : nom + nombre de hits
@@ -57,22 +60,22 @@ void Collection::Top10(const bool e, const int t)
 				/*vérification du type de fichier*/
 				debut = it1.first.rfind(SEP_PT)+1;
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
-				if (find(EXCLUSIE, EXCLUSIE + NB_FORMAT, extensionFic) == EXCLUSIE + NB_FORMAT)		//extension n'est pas dans la liste des extensions à exclure
+				if (find(EXCLUSIE, EXCLUSIE + NB_EXTENSION, extensionFic) == EXCLUSIE + NB_EXTENSION)		//extension n'est pas dans la liste des extensions à exclure
 				{
 					cpt = it1.second.Compte("GET", t);
-					if (cpt > max)
+					if (cpt > max)	//nombre de hits supérieur au max courant
 					{
 						dejaDansTop = false;
 						for (auto const &it2 : leTop)	//vérification que la Cible ne soit pas déjà dans le top
 						{
-							if (it2.first == it1.first)
+							if (it2.first == it1.first)		//deja dans le top
 							{
 								dejaDansTop = true;
 							}
 						}
-						if (!dejaDansTop)
+						if (!dejaDansTop)	//pas deja dans le top
 						{
-							max = cpt;
+							max = cpt;		//MAJ des max et cibleMax
 							cibleMax = it1.first;
 						}
 					}
@@ -152,7 +155,7 @@ void Collection::Top10(const bool e, const int t)
 			}
 		}	//fin while(!fini)
 	} // on a notre top bien formé
-	for (auto const &iterTop : leTop)
+	for (auto const &iterTop : leTop)	//affichage
 	{
 		cout << iterTop.first << " (" << iterTop.second << " hits)" << endl;
 	}
@@ -168,7 +171,7 @@ Collection & Collection::operator = ( const Collection & unCollection )
 
 */
 //-------------------------------------------- Constructeurs - destructeur
-Collection::Collection(const Collection & unCollection)
+/*Collection::Collection(const Collection & unCollection)
 // Algorithme :
 //
 {
@@ -176,11 +179,14 @@ Collection::Collection(const Collection & unCollection)
 	cout << "Appel au constructeur de copie de <Collection>" << endl;
 #endif
 } //----- Fin de Collection (constructeur de copie)
-
+*/
 
 
 Collection::Collection(const string & nomFichier)
-// Algorithme :
+// Algorithme : ouvre un flux de lecture de fichier.
+// Tant que le fichier n'est pas terminé, traite les logs ligne par ligne.
+// Identifie les cibles et les crée dans la collection
+// Groupe les logs par cible et par requête
 //
 {
 #ifdef MAP
@@ -199,9 +205,9 @@ Collection::Collection(const string & nomFichier)
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
-			if (adrCible.rfind(SEP_URL) != string::npos)
+			if (adrCible.rfind(SEP_URL) != string::npos)	// l'URL contient un '/'
 			{
-				adrCible = adrCible.substr(adrCible.rfind(SEP_URL), distance(adrCible.begin(), adrCible.end() - adrCible.rfind(SEP_URL)));
+				adrCible = adrCible.substr(adrCible.rfind(SEP_URL), distance(adrCible.begin(), adrCible.end() - adrCible.rfind(SEP_URL)));	//on garde uniquement ce qui est après le '/'
 				adrCible = adrCible.substr(0, adrCible.find(SEP_PVIRG)); //enlever tout ce qui est apres un ;
 				adrCible = adrCible.substr(0, adrCible.find(SEP_INT)); //enlever tout ce qui est après un ?
 			}

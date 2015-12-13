@@ -50,7 +50,7 @@ public:
 	int Compte(const string &requete, const int t =-1) const;
 	// Mode d'emploi :
 	// Compte le nombre de logs consignés correspondant à la requête entrée en paramètre.
-	// Tient compte des options e et h pour filtrer les résultats.
+	// Tient compte des options e et t pour filtrer les résultats.
 	//
 	// Contrat :
 	//

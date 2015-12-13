@@ -20,7 +20,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 
 extern const string EXCLUSIE[];
-extern const int NB_FORMAT;
+extern const int NB_EXTENSION;
 extern const char SEP_PT;
 //---------------------------------------------------- Variables de classe
 
@@ -63,7 +63,7 @@ bool Graphe::EstImage(const string & adresse)
 	string Extension = adresse.substr(posExtension + 1,adresse.npos); // l'extension
 	bool image = false; // s'il s'agit d'une image
 	int i = 0;
-	while( i < NB_FORMAT && !image ) // parcours les extensions images.
+	while( i < NB_EXTENSION && !image ) // parcours les extensions images.
 	{
 		image = Extension.compare(EXCLUSIE[i]) == 0;// si l'extension est celle d'une image
 		i++;
