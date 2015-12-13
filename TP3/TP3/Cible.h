@@ -67,7 +67,7 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Cible ( const Cible & unCible ); // déclaré mais non défini pour empécher son utilisation
+    Cible ( const Cible & unCible ); 
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
