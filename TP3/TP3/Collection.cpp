@@ -199,7 +199,11 @@ Collection::Collection(const string & nomFichier)
 		while (getline(fichier, ligneLog))		//tant que l'on a pas fini de lire le fichier
 		{
 			/* extraction de la cible de la requête */
-			
+			if (ligneLog.find(SEP_REQ) == string::npos || ligneLog.find(SEP) == string::npos)
+			{
+				cerr << "Log invalide : " << ligneLog << endl;
+				return;
+			}
 			size_t debut = ligneLog.find(SEP_REQ) +1;
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
