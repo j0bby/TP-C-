@@ -1,2 +1,12 @@
 digraph {
+node0 [/temps/4IF1.html];
+node1 [/temps/4IF15.html];
+node3 [/temps/4IF2.html];
+node4 [/temps/4IF3.html];
+node5 [Mozilla/5.0 (Windows NT 6.1];
+node2 [http://intranet-if.insa-lyon.f0 (Windows NT 6.1];
+node1 -> node0 [label="3"];
+node1 -> node3 [label="2"];
+node2 -> node0 [label="1"];
+node5 -> node4 [label="1"];
 }

@@ -1,1 +1,1 @@
-../TP3.exe logs1.log
+../TP3.exe -e logs1.log

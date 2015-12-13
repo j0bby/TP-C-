@@ -1,1 +1,1 @@
-../TP3.exe err.log
+../TP3.exe -t 9 err.log
