@@ -6,7 +6,7 @@
 *************************************************************************/
 
 //---------- Interface de la classe <Log> (fichier Log.h) ------
-#if ! defined ( LOG_H )
+#if !defined ( LOG_H )
 #define LOG_H
 #include <string>
 using namespace std;
@@ -15,7 +15,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 const char SEP = ' ', SEP_DATE_FIN = ']', SEP_REQ = '"', SEP_URL = '/', SEP_INT = '?', SEP_PVIRG = ';'; // les séparateurs 
 const string SEP_PARAM = "/&";
-const string URL_LOCALE = "http://intranet-if.insa-lyon.fr";
+const string URL_LOCALE = "http://intranet-if.insa-lyon.fr", ERREUR = "ERREUR";
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -71,20 +71,22 @@ protected:
 
 private:
 //------------------------------------------------------- Méthodes privées
-
-    string ip; 			// l'adresse IP à l'origine de la requête
-    string logname;		// le nom d'utilisateur du visiteur
-	string user;		// le nom d'utilisateur authentifié
-    string date; 		// la date de la requête, ainsi que le décalage par rapport à Greenwich
-    string statut; 		// le retour de la requête HTML
-	string taille; 		// quantité de données transférées en octets
-    string referer; 	// adresse depuis laquelle a été émise la requête
-	string url;			// URL du referer en entier
-    string navigateur; 	// infos navigateur
-
+	void setErreur();
+	// Mode d'emploi : 
+	// modifie la valeur de chaque attributs à la valeur ERREUR
+	// Contrat:
+	// 
 protected:
 //----------------------------------------------------- Attributs protégés
-
+	string ip; 			// l'adresse IP à l'origine de la requête
+	string logname;		// le nom d'utilisateur du visiteur
+	string user;		// le nom d'utilisateur authentifié
+	string date; 		// la date de la requête, ainsi que le décalage par rapport à Greenwich
+	string statut; 		// le retour de la requête HTML
+	string taille; 		// quantité de données transférées en octets
+	string referer; 	// adresse depuis laquelle a été émise la requête
+	string url;			// URL du referer en entier
+	string navigateur; 	// infos navigateur
 private:
 //------------------------------------------------------- Attributs privés
 
@@ -95,8 +97,9 @@ private:
 
 //----------------------------------------------------------- Types privés
 
-};
+
 
 //----------------------------------------- Types dépendants de <Log>
 
 #endif // LOG_H
+};

@@ -69,6 +69,7 @@ Log::Log(const string &log)
 	if (log.empty()) // chaine vide
 	{
 		cerr << "[LOG] le log est vide " << endl;
+		setErreur();
 		return;
 	}
 	else
@@ -87,6 +88,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <ip> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -99,6 +101,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <user> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -111,6 +114,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <logname> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -124,6 +128,7 @@ Log::Log(const string &log)
 		else										// SEP_DATE_FIN non trouvé
 		{
 			cerr << "[LOG] erreur dans <date> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -136,6 +141,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <statut> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -148,6 +154,7 @@ Log::Log(const string &log)
 		else										// SEP_REQ non trouvé
 		{
 			cerr << "[LOG] erreur dans <requête> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -159,6 +166,7 @@ Log::Log(const string &log)
 		else										// SEP_REQ non trouvé
 		{
 			cerr << "[LOG] erreur dans <retour> : " << log << endl;
+			setErreur();
 			return;
 		}
 		/*récupération taille*/
@@ -170,6 +178,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <taille> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -182,6 +191,7 @@ Log::Log(const string &log)
 		else										// SEP_REQ non trouvé
 		{
 			cerr << "[LOG] erreur dans <url> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -205,6 +215,7 @@ Log::Log(const string &log)
 		else										// SEP non trouvé
 		{
 			cerr << "[LOG] erreur dans <navigateur> : " << log << endl;
+			setErreur();
 			return;
 		}
 
@@ -240,9 +251,22 @@ Log::~Log()
 #endif
 } //----- Fin de ~Log
 
-
   //------------------------------------------------------------------ PRIVE
 
   //----------------------------------------------------- Méthodes protégées
 
   //------------------------------------------------------- Méthodes privées
+void Log::setErreur()
+// Algorithme :
+//
+{
+	ip = ERREUR;
+	logname = ERREUR;
+	user = ERREUR;
+	date = ERREUR;
+	statut = ERREUR;
+	taille = ERREUR;
+	referer = ERREUR;
+	url = ERREUR;
+	navigateur = ERREUR;
+}// ----- Fin de setErreur
