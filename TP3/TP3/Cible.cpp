@@ -165,15 +165,15 @@ Cible & Cible::operator = ( const Cible & unCible )
 
 */
 //-------------------------------------------- Constructeurs - destructeur
-/*Cible::Cible(const Cible & unCible)
+Cible::Cible(const Cible & unCible)
 // Algorithme :
-//
+// comportement par défaut
 {
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <Cible>" << endl;
 #endif
 } //----- Fin de Cible (constructeur de copie)
-*/
+
 
 Cible::Cible()
 // Algorithme :

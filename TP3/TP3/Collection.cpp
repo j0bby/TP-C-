@@ -19,7 +19,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE, SEP_PT, SEP_INT, SEP_PVIRG; // les séparateurs
 extern const string EXCLUSIE[];
-extern const int NB_EXTENSION;
+extern const int NB_EXTENSIONS;
 const unsigned int NOMBRETOP = 10;	//nombre de cibles à afficher dans le top des plus consultées
 //---------------------------------------------------- Variables de classe
 
@@ -60,7 +60,7 @@ void Collection::Top10(const bool e, const int t) const
 				/*vérification du type de fichier*/
 				debut = it1.first.rfind(SEP_PT)+1;
 				extensionFic = it1.first.substr(debut, distance(it1.first.begin(), it1.first.end()) - debut);
-				if (find(EXCLUSIE, EXCLUSIE + NB_EXTENSION, extensionFic) == EXCLUSIE + NB_EXTENSION)		//extension n'est pas dans la liste des extensions à exclure
+				if (find(EXCLUSIE, EXCLUSIE + NB_EXTENSIONS, extensionFic) == EXCLUSIE + NB_EXTENSIONS)		//extension n'est pas dans la liste des extensions à exclure
 				{
 					cpt = it1.second.Compte("GET", t);
 					if (cpt > max)	//nombre de hits supérieur au max courant
@@ -193,7 +193,6 @@ Collection::Collection(const string & nomFichier)
 	cout << "Appel au constructeur de <Collection>" << endl;
 #endif
 	ifstream fichier (nomFichier.c_str());
-	char testFin;	//string utilisée pour tester la fin du fichier en tentant une lecture
 	if (fichier.good())	//fichier trouvé et non vide
 	{
 		string ligneLog;
@@ -205,9 +204,10 @@ Collection::Collection(const string & nomFichier)
 			debut = ligneLog.find(SEP, debut)+1;
 			size_t fin = ligneLog.find(SEP_REQ, debut);
 			string adrCible = ligneLog.substr(debut, fin - debut);
+			fin = ligneLog.find(SEP, debut);
+			adrCible = ligneLog.substr(debut, fin - debut);
 			if (adrCible.rfind(SEP_URL) != string::npos)	// l'URL contient un '/'
 			{
-				adrCible = adrCible.substr(adrCible.rfind(SEP_URL), distance(adrCible.begin(), adrCible.end() - adrCible.rfind(SEP_URL)));	//on garde uniquement ce qui est après le '/'
 				adrCible = adrCible.substr(0, adrCible.find(SEP_PVIRG)); //enlever tout ce qui est apres un ;
 				adrCible = adrCible.substr(0, adrCible.find(SEP_INT)); //enlever tout ce qui est après un ?
 			}

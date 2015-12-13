@@ -44,8 +44,8 @@ int main()
 {
 	cout << "Programme de tests" << endl;
 	testLog();
-	//testCible();
-	//testCollection();
+	testCible();
+	testCollection();
 	testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;

@@ -216,7 +216,7 @@ Log::Log(const string &log)
 		}
 	} // fin du traitement sans erreur
 
-//#ifdef MAP
+#ifdef MAP
 	cout << "Les valeurs du Log sont :" << endl;
 	  cout << "ip"<<ip << endl;
 	  cout <<"logname"<< logname << endl;
@@ -227,7 +227,7 @@ Log::Log(const string &log)
 	  cout << "URL" << url << endl;
 	  cout << "referer"<<referer << endl;
 	  cout <<"nvigateur"<< navigateur << endl;
-//#endif*/
+#endif
 } //----- Fin de Log
 
 

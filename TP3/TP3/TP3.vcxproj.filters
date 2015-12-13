@@ -27,7 +27,7 @@
     <ClCompile Include="Graphe.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="TP3.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
