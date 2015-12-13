@@ -18,9 +18,11 @@ using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
-const int NB_HEURES = 24;
 extern const char SEP_REQ , SEP ,  SEP_DATE_FIN, SEP_INT, SEP_PVIRG;
+const int NB_HEURES = 24;
 const char SEP_DATE_DEBUT = '[', SEP_HEURE = ':', SEP_PT = '.';
+const string EXCLUSIE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css", (string)"ico" };	//extensions à exclure si option e spécifiée
+const int NB_EXTENSIONS = 9;	//nombre d'extensions bannies
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
@@ -47,7 +49,7 @@ public:
 	// Contrat :
 	//
 
-	int Compte(const string &requete, const int t =-1) const;
+	int Compte(const string &requete, const bool e = false, const int t =-1) const;
 	// Mode d'emploi :
 	// Compte le nombre de logs consignés correspondant à la requête entrée en paramètre.
 	// Tient compte des options e et t pour filtrer les résultats.

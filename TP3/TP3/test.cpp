@@ -36,22 +36,28 @@ static void testGrapheGenereFichier();
 static const string logGet = "192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] \"GET / temps / 4IF16.html HTTP / 1.1\" 200 12106 \"http://intranet-if.insa-lyon.fr/temps/4IF15.html\" \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1\"";
 static const string logPost = "192.168.0.0 - -[08/Sep / 2012:11 : 16 : 07 + 0200] \"POST /temps/4IF20.html HTTP/1.1\" 200 5185 \"http://intranet-if.insa-lyon.fr/temps/4IF19.html\" \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1\"";
 static const string logInter = "192.168.0.4 - - [08/Sep/2012:11:19:13 +0200] \"GET / SiteWebIF / Intranet - etudiant.php ? ticket = ST - 341667 - KHlNEzic9e5btb4JQ1Nw - dsi - vm03 HTTP / 1.1\" 302 - \" - \" \"Mozilla / 5.0 (Windows NT 6.1; WOW64) AppleWebKit / 537.1 (KHTML, like Gecko) Chrome / 21.0.1180.89 Safari / 537.1\"";
-static const string logsTestCollec = "anonyme.log";
+static const string logsTestCollec = "testCollec.in";
 static const string logsTestCollecEgalite = "testCollecEgalite.in";
 static const string logsTestCollecVide = "testCollecVide.in";
 static const string logsTestCollecMoins10 = "testCollecMoins10.in";
+
+
+
 int main()
 {
 	cout << "Programme de tests" << endl;
-	testLog();
-	testCible();
+	//testLog();
+	//testCible();
 	testCollection();
-	testGraphe();
+	//testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
 	return 0;
 }
+
+
+
 
 void testCible()	//batterie de tests de la classe Cible
 {

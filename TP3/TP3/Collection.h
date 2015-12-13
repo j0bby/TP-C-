@@ -15,9 +15,8 @@ copyright            : (C) 2015 par mfallouh_mvirsolvy
 #include "Cible.h"
 using namespace std;
 //------------------------------------------------------------- Constantes 
-const string EXCLUSIE[] = { (string)"jpg", (string)"png", (string)"tga", (string)"gif", (string)"jpeg", (string)"bmp", (string)"js",(string)"css", (string)"ico" };	//extensions à exclure si option e spécifiée
-const int NB_EXTENSIONS = 9;	//nombre d'extensions bannies
-																																						//------------------------------------------------------------------ Types 
+
+//------------------------------------------------------------------ Types 
 
 //------------------------------------------------------------------------ 
 // Rôle de la classe <Collection>

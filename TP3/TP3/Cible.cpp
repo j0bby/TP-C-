@@ -18,6 +18,8 @@ copyright            : (C) 2015 par mfallouh mvirsolvy
 //------------------------------------------------------------- Constantes
 extern const int NB_HEURES;
 extern const char SEP_REQ, SEP, SEP_DATE_DEBUT, SEP_DATE_FIN, SEP_HEURE;
+extern const string EXCLUSIE[];
+extern const int NB_EXTENSIONS;
 //---------------------------------------------------- Variables de classe
 
 //----------------------------------------------------------- Types privés
@@ -128,31 +130,85 @@ int Cible::Ajouter(const string & log)
 	return 0;
 }	//fin de Ajouter
 
-int Cible::Compte(const string & requete,  const int t) const
+int Cible::Compte(const string & requete, const bool e,  const int t) const
 // Algorithme :
 // Compte le nombre de hits en utilisant la taille de la liste de logs
 // Tri par requete, filtrage de l'heure si spécifié en paramètre
 {
 	int compte = 0;	//variable de retour
 	list<Log>::iterator itListe;	//itérateur pour le parcours des listes
-
-	if (t == -1)	//pas d'option h
+	if (!e)	//pas d'option e
 	{
-		for (int heure = 0; heure < 24; heure++)
+		if (t == -1)	//pas d'option t
 		{
-			if (lesLogs[heure].find(requete) != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
+			for (int heure = 0; heure < 24; heure++)
 			{
+				if (lesLogs[heure].find(requete) != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
+				{
 					compte += lesLogs[heure].find(requete)->second.size();
+				}
 			}
 		}
-	}
-	else	//option h spécifiée
-	{
-		if (lesLogs[t].find(requete) != lesLogs[t].end())	//si la requete est présente dans le dictionnaire
+		else	//option t spécifiée
 		{
-			compte += lesLogs[t].find(requete)->second.size();
+			if (lesLogs[t].find(requete) != lesLogs[t].end())	//si la requete est présente dans le dictionnaire
+			{
+				compte += lesLogs[t].find(requete)->second.size();
+			}
 		}
-	}
+	}	//fin pas d'option e
+	else	//option e spécifiée
+	{
+		string extensionFic;
+		size_t debut;
+		if (t == -1)	//pas d'option t
+		{
+			for (int heure = 0; heure < 24; heure++)	//parcours de toutes les heures
+			{
+				if (lesLogs[heure].find(requete) != lesLogs[heure].end())	//si la requete est présente dans le dictionnaire
+				{
+					for (auto const &it : lesLogs[heure].find(requete)->second)		//on parcourt la liste de Log
+					{
+						if ((debut = it.referer.rfind(SEP_PT)) != string::npos)	//si on trouve un '.'
+						{
+							debut++;
+							extensionFic = it.referer.substr(debut, distance(it.referer.begin(), it.referer.end()) - debut);	//on récupère la potentielle extension
+							if (find(EXCLUSIE, EXCLUSIE + NB_EXTENSIONS, extensionFic) == EXCLUSIE + NB_EXTENSIONS)		//si cette extension n'est pas à retirer des résultats
+							{
+								compte++;
+							}
+						}	//fin de si on trouve un '.'
+						else	//pas de '.' trouvé
+						{
+							compte++;
+						}
+					}	//fin parcours des logs
+				}	//fin requête présente dans le dictionnaire
+			}	//fin parcours de toutes les heures
+		}	//fin pas d'option t
+		else	//option t spécifiée
+		{
+			if (lesLogs[t].find(requete) != lesLogs[t].end())	//si la requete est présente dans le dictionnaire
+			{
+				for (auto const &it : lesLogs[t].find(requete)->second)		//on parcourt la liste de Log
+				{
+					if ((debut = it.referer.rfind(SEP_PT)) != string::npos)	//si on trouve un '.'
+					{
+						debut++;
+						extensionFic = it.referer.substr(debut, distance(it.referer.begin(), it.referer.end()) - debut);	//on récupère la potentielle extension
+						if (find(EXCLUSIE, EXCLUSIE + NB_EXTENSIONS, extensionFic) == EXCLUSIE + NB_EXTENSIONS)		//si cette extension n'est pas à retirer des résultats
+						{
+							compte++;
+						}
+					}	//fin de si on trouve un '.'
+					else	//pas de '.' trouvé
+					{
+						compte++;
+					}
+				}	//fin parcours des logs
+			}	//fin requête présente dans le dictionnaire
+		}	//fin option t spécifiée
+	}	//fin option e spécifiée
 	return compte;
 }	//fin de Compte
 
