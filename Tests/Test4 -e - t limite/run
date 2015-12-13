@@ -1,1 +1,1 @@
-../TP3.exe -g graphe.dot Vide.log
+../TP3.exe -e -t 9 Vide.log

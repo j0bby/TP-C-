@@ -18,5 +18,5 @@ node3 -> node6 [label="2"];
 node3 -> node7 [label="2"];
 node3 -> node8 [label="2"];
 node3 -> node9 [label="2"];
-node3 -> node10 [label="2"];
+node3 -> node10 [label="1"];
 }
