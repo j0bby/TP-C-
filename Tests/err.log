@@ -5,7 +5,7 @@
 192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF2.html HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF2.html HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF3.html HTTP/1.1" 200 yon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
-192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF3.html HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 
+192
 192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF4.html HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 192.168.0.0 - - [08/Sep/2012:11:16:02 +0200] "GET /temps/4IF4.html HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
 192.168.0.0 - - [08/Sep/2012:mps/4IF5.jpg HTTP/1.1" 200 12106 "http://intranet-if.insa-lyon.fr/temps/4IF15.html" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1"
