@@ -13,9 +13,9 @@ LIBS =
 LIBPATH =
 INCPATH =
 
-$(EXE) : $(OBJ) main.o
+$(EXE) : $(OBJ) TP3.o
 	$(ECHO) "Edition des liens"
-	$(EDL) $(OUTPUT) $(EXE) $(EDLFLAGS) $(LIBPATH) $(OBJ) main.o $(LIBS)
+	$(EDL) $(OUTPUT) $(EXE) $(EDLFLAGS) $(LIBPATH) $(OBJ) TP3.o $(LIBS)
 
 $(TEST) : $(OBJ) test.o
 	$(ECHO) "Edition des liens"
