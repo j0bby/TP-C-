@@ -13,7 +13,9 @@ using namespace std;
 //--------------------------------------------------- Interfaces utilisées
 
 //------------------------------------------------------------- Constantes
-const char SEP = ' ', SEP_DATE_FIN = ']', SEP_REQ = '"', SEP_URL = '/'; // les séparateurs 
+const char SEP = ' ', SEP_DATE_FIN = ']', SEP_REQ = '"', SEP_URL = '/', SEP_INT = '?', SEP_PVIRG = ';'; // les séparateurs 
+const string SEP_PARAM = "/&";
+const string URL_LOCALE = "http://intranet-if.insa-lyon.fr";
 //------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------

@@ -43,10 +43,10 @@ static const string logsTestCollecMoins10 = "testCollecMoins10.in";
 int main()
 {
 	cout << "Programme de tests" << endl;
-	//testLog();
+	testLog();
 	//testCible();
-	testCollection();
-	//testGraphe();
+	//testCollection();
+	testGraphe();
 	cout << "Tapez du texte pour quitter" << endl;
 	string zzz;
 	cin >> zzz;
@@ -124,10 +124,10 @@ static void testGraphe()
 {
 	cout << "Test Graphe" << endl;
 	testGrapheConstruct();
-	testGrapheConstructE();
-	testGrapheConstructT();
-	testGrapheConstructET();
-	testGrapheGenereFichier();
+	//testGrapheConstructE();
+	//testGrapheConstructT();
+	//testGrapheConstructET();
+	//testGrapheGenereFichier();
 }
 static void testGrapheConstruct()
 {

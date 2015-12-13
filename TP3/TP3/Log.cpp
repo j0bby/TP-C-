@@ -110,7 +110,7 @@ Log::Log(const string &log)
 		}
 		else										// SEP non trouvé
 		{
-			cerr << "[LOG] erreur dans <ip> : " << log << endl;
+			cerr << "[LOG] erreur dans <logname> : " << log << endl;
 			return;
 		}
 
@@ -123,7 +123,7 @@ Log::Log(const string &log)
 		}
 		else										// SEP_DATE_FIN non trouvé
 		{
-			cerr << "[LOG] erreur dans <ip> : " << log << endl;
+			cerr << "[LOG] erreur dans <date> : " << log << endl;
 			return;
 		}
 
@@ -158,7 +158,7 @@ Log::Log(const string &log)
 		}
 		else										// SEP_REQ non trouvé
 		{
-			cerr << "[LOG] erreur dans <requête> : " << log << endl;
+			cerr << "[LOG] erreur dans <retour> : " << log << endl;
 			return;
 		}
 		/*récupération taille*/
@@ -181,20 +181,19 @@ Log::Log(const string &log)
 		}
 		else										// SEP_REQ non trouvé
 		{
-			cerr << "[LOG] erreur dans <referer> : " << log << endl;
+			cerr << "[LOG] erreur dans <url> : " << log << endl;
 			return;
 		}
 
-		if (url.rfind(SEP_URL) != string::npos)
+		referer = url;
+		if (referer.find(URL_LOCALE) != string::npos)
 		{
-			referer = url.substr(url.rfind(SEP_URL), distance(url.begin(), url.end() - url.rfind(SEP_URL)));
-			referer = referer.substr(0, referer.find(';')); //enlever tout ce qui est apres un ;
-			referer = referer.substr(0, referer.find('?')); //enlever tout ce qui est après un ?
+			referer.erase(0, URL_LOCALE.size());
 		}
-		else
-		{
-			referer = url;
-		}
+		referer = referer.substr(0, referer.find(SEP_PVIRG)); //enlever tout ce qui est apres un ;
+		referer = referer.substr(0, referer.find(SEP_INT)); //enlever tout ce qui est après un ?
+		referer = referer.substr(0, referer.find(SEP_PARAM)); //enlever tout ce qui est après un /&
+		
 		/* récupération navigateur*/
 		posDebut = log.find(SEP_REQ, posFin) + 1;
 		posDebut = log.find(SEP_REQ, posDebut) + 1;
@@ -217,7 +216,7 @@ Log::Log(const string &log)
 		}
 	} // fin du traitement sans erreur
 
-/*#ifdef MAP
+//#ifdef MAP
 	cout << "Les valeurs du Log sont :" << endl;
 	  cout << "ip"<<ip << endl;
 	  cout <<"logname"<< logname << endl;
